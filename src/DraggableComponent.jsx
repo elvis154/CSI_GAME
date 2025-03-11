@@ -1,63 +1,83 @@
+// DraggableComponent.jsx
 import React, { useState } from 'react';
-import './terminal.css';
+import './dnd.css';
 
-const DraggableComponent = ({ id, type, label, icon, color, size, align, onSelect }) => {
-  const [isDragging, setIsDragging] = useState(false);
+const DraggableComponent = ({ id, type, label, icon, colorOptions }) => {
+  const [selectedColor, setSelectedColor] = useState(colorOptions?.[0] || 'black');
+  const [isColorMenuOpen, setIsColorMenuOpen] = useState(false);
   
+  // Handle drag start
   const handleDragStart = (e) => {
-    setIsDragging(true);
-    
-    // Set the drag data with component information
-    e.dataTransfer.setData('application/json', JSON.stringify({
+    // Set the drag data with component info including selected color
+    const componentData = {
       id,
       type,
       label,
       icon,
-      color,
-      size,
-      align
-    }));
+      color: selectedColor
+    };
     
-    // Create a ghost image effect
-    const dragImage = document.createElement('div');
-    dragImage.classList.add('win95-drag-preview');
-    dragImage.textContent = label;
-    document.body.appendChild(dragImage);
+    e.dataTransfer.setData('component', JSON.stringify(componentData));
     
-    // Set the drag image
-    e.dataTransfer.setDragImage(dragImage, 20, 20);
+    // Add pixelated effect during drag
+    e.dataTransfer.setDragImage(e.target, 0, 0);
     
-    // Clean up the drag image element
-    setTimeout(() => {
-      document.body.removeChild(dragImage);
-    }, 0);
+    // Add class for styling during drag
+    e.target.classList.add('dragging');
   };
-
-  const handleDragEnd = () => {
-    setIsDragging(false);
+  
+  // Handle drag end
+  const handleDragEnd = (e) => {
+    e.target.classList.remove('dragging');
   };
-
-  const handleClick = () => {
-    if (onSelect) {
-      onSelect({ id, type, label, icon, color, size, align });
-    }
+  
+  // Toggle color menu
+  const toggleColorMenu = (e) => {
+    e.stopPropagation();
+    setIsColorMenuOpen(!isColorMenuOpen);
   };
-
+  
+  // Select color
+  const selectColor = (color, e) => {
+    e.stopPropagation();
+    setSelectedColor(color);
+    setIsColorMenuOpen(false);
+  };
+  
   return (
-    <div
-      className={`win95-component win95-${type} ${isDragging ? 'dragging' : ''}`}
+    <div 
+      className={`draggable-component ${type} color-${selectedColor}`}
       draggable="true"
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
-      onClick={handleClick}
-      style={{
-        backgroundColor: color,
-        fontSize: size === 'large' ? '14px' : size === 'small' ? '10px' : '12px',
-        textAlign: align || 'left'
-      }}
+      data-component-id={id}
     >
-      {icon && <img src={icon} alt={label} className="component-icon" />}
-      <span className="component-label">{label}</span>
+      <div className="component-icon">{icon}</div>
+      <div className="component-label">{label}</div>
+      <div className="component-id">ID: {id}</div>
+      
+      <div className="color-selector">
+        <button 
+          className="color-button" 
+          onClick={toggleColorMenu}
+          style={{ backgroundColor: selectedColor }}
+        >
+          <span className="color-dot"></span>
+        </button>
+        
+        {isColorMenuOpen && (
+          <div className="color-dropdown">
+            {colorOptions.map(color => (
+              <div 
+                key={color}
+                className="color-option"
+                style={{ backgroundColor: color }}
+                onClick={(e) => selectColor(color, e)}
+              ></div>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

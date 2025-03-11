@@ -3,86 +3,7 @@ import { GameProvider, GameContext } from './GameContext';
 import DraggableComponent from './DraggableComponent';
 import DropZone from './DropZone';
 import './dnd.css';
-
-// Reference Window Component
-const ReferenceWindow = ({ onClose, levelData }) => {
-  const [position, setPosition] = useState({ x: window.innerWidth - 420, y: 20 });
-  const [isDragging, setIsDragging] = useState(false);
-  const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
-
-  const handleMouseDown = (e) => {
-    if (e.target.classList.contains('win95-title-bar')) {
-      setIsDragging(true);
-      setDragOffset({
-        x: e.clientX - position.x,
-        y: e.clientY - position.y
-      });
-    }
-  };
-
-  const handleMouseMove = (e) => {
-    if (isDragging) {
-      setPosition({
-        x: e.clientX - dragOffset.x,
-        y: e.clientY - dragOffset.y
-      });
-    }
-  };
-
-  const handleMouseUp = () => {
-    setIsDragging(false);
-  };
-
-  useEffect(() => {
-    if (isDragging) {
-      document.addEventListener('mousemove', handleMouseMove);
-      document.addEventListener('mouseup', handleMouseUp);
-    } else {
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseup', handleMouseUp);
-    }
-    
-    return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseup', handleMouseUp);
-    };
-  }, [isDragging]);
-
-  return (
-    <div 
-      className="win95-window reference-window" 
-      style={{ 
-        position: 'absolute', 
-        top: position.y, 
-        left: position.x, 
-        width: '400px',
-        zIndex: 1000 
-      }}
-    >
-      <div 
-        className="win95-title-bar"
-        onMouseDown={handleMouseDown}
-      >
-        <div className="win95-title">Reference Design</div>
-        <button className="win95-close-btn" onClick={onClose}>×</button>
-      </div>
-      <div className="win95-window-content">
-        <p>This is what you need to create:</p>
-        <div className="reference-design">
-          {/* Sample reference UI based on level */}
-          <div className="ref-header">Example Windows 95 Layout</div>
-          <div className="ref-content">
-            {levelData?.referenceComponents?.map((ref, index) => (
-              <div key={index} className={`ref-component ref-${ref.type}`}>
-                {ref.label}
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
+import WebsiteSections from './WebsiteSections';
 
 // Error Dialog Component
 const ErrorDialog = ({ message, onClose }) => {
@@ -155,12 +76,6 @@ const GameContainer = () => {
           <div className="game-score">Score: {score}</div>
           <div className="game-timer">Time: {formatTime(timer)}</div>
         </div>
-        <button 
-          className="win95-button reference-btn"
-          onClick={() => setShowReference(!showReference)}
-        >
-          {showReference ? 'Hide Reference' : 'Show Reference'}
-        </button>
       </div>
       
       <div className="game-content">
@@ -182,34 +97,9 @@ const GameContainer = () => {
         
         {/* Main drop area */}
         <div className="drop-areas">
-          <DropZone 
-            id="form-inputs" 
-            label="Form Inputs" 
-            onComponentDrop={handleDrop}
-            checkCorrectPlacement={checkPlacement}
-          />
-          <DropZone 
-            id="form-options" 
-            label="Form Options" 
-            onComponentDrop={handleDrop}
-            checkCorrectPlacement={checkPlacement}
-          />
-          <DropZone 
-            id="form-buttons" 
-            label="Form Buttons" 
-            onComponentDrop={handleDrop}
-            checkCorrectPlacement={checkPlacement}
-          />
+        <WebsiteSections onComponentDrop={handleDrop} />
         </div>
       </div>
-      
-      {/* Reference window */}
-      {showReference && (
-        <ReferenceWindow 
-          onClose={() => setShowReference(false)} 
-          levelData={levelData}
-        />
-      )}
       
       {/* Error dialog */}
       {errorMessage && (

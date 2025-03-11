@@ -18,6 +18,7 @@ root.render(
         <Route path="/Win" element={<Win95Terminal/>} />
         <Route path="/Win1" element={<Win95Terminal1/>} />
         <Route path="/matrix" element={<Windows95Matrix/>} />
+        {/* <Route path="/leaderboard" element={}></> */}
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
