@@ -1,0 +1,489 @@
+/* Windows 95 Theme Base Styles */
+:root {
+  --win95-gray: #c0c0c0;
+  --win95-gray-light: #dfdfdf;
+  --win95-gray-dark: #808080;
+  --win95-blue: #000080;
+  --win95-black: #000000;
+  --win95-white: #ffffff;
+  --win95-shadow-outer: inset -1px -1px #0a0a0a, inset 1px 1px #ffffff, inset -2px -2px #808080, inset 2px 2px #dfdfdf;
+  --win95-shadow-inner: inset -1px -1px #ffffff, inset 1px 1px #0a0a0a, inset -2px -2px #dfdfdf, inset 2px 2px #808080;
+}
+
+body {
+  font-family: 'MS Sans Serif', 'Segoe UI', Tahoma, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: teal;
+  color: var(--win95-black);
+  overflow: hidden;
+}
+
+/* Main Terminal Container */
+.win95-terminal {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Game Container */
+.game-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Account for taskbar */
+  background-color: var(--win95-gray);
+  position: relative;
+}
+
+/* Windows 95 Window Styling */
+.win95-window {
+  background-color: var(--win95-gray);
+  box-shadow: var(--win95-shadow-outer);
+  border: 1px solid var(--win95-gray-dark);
+}
+
+.win95-title-bar {
+  background-color: var(--win95-blue);
+  color: var(--win95-white);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2px 4px;
+  font-weight: bold;
+  cursor: move;
+}
+
+.win95-close-btn {
+  background-color: var(--win95-gray);
+  border: 1px outset var(--win95-gray-light);
+  color: var(--win95-black);
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.win95-window-content {
+  padding: 8px;
+}
+
+/* Game Header */
+.game-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+  background-color: var(--win95-gray);
+  box-shadow: var(--win95-shadow-outer);
+  z-index: 10;
+}
+
+.game-stats {
+  display: flex;
+  gap: 16px;
+}
+
+.reference-btn {
+  margin-left: auto;
+}
+
+/* Game Content Area */
+.game-content {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* Component Sidebar */
+.components-sidebar {
+  width: 200px;
+  background-color: var(--win95-gray);
+  box-shadow: var(--win95-shadow-outer);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.sidebar-title {
+  background-color: var(--win95-blue);
+  color: var(--win95-white);
+  padding: 4px 8px;
+  font-weight: bold;
+}
+
+.components-list {
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Component Color Picker and Properties Panel */
+.component-properties {
+  border-top: 1px solid var(--win95-gray-dark);
+  padding: 8px;
+  margin-top: 8px;
+}
+
+.property-group {
+  margin-bottom: 8px;
+}
+
+.property-label {
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+
+.color-picker {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+}
+
+.color-option {
+  width: 20px;
+  height: 20px;
+  border: 1px outset var(--win95-gray-light);
+  cursor: pointer;
+}
+
+.color-option:hover {
+  border: 1px inset var(--win95-gray-dark);
+}
+
+/* Draggable Component Styling */
+.win95-component {
+  padding: 6px;
+  background-color: var(--win95-gray);
+  box-shadow: var(--win95-shadow-outer);
+  cursor: grab;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  user-select: none;
+  max-width: 180px;
+}
+
+.win95-component.dragging {
+  opacity: 0.5;
+  cursor: grabbing;
+}
+
+.win95-drag-preview {
+  background-color: var(--win95-gray);
+  border: 1px solid var(--win95-gray-dark);
+  padding: 4px 8px;
+  position: absolute;
+  z-index: 1000;
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+.component-icon {
+  width: 16px;
+  height: 16px;
+}
+
+/* Component Type Styling */
+.win95-button {
+  background-color: var(--win95-gray);
+  border: 2px outset var(--win95-gray-light);
+  padding: 4px 8px;
+  cursor: pointer;
+}
+
+.win95-button:active {
+  border-style: inset;
+}
+
+.win95-textinput {
+  border: 2px inset var(--win95-gray-light);
+  background-color: var(--win95-white);
+}
+
+.win95-checkbox, .win95-radio {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.win95-menuitem {
+  padding: 2px 8px;
+}
+
+.win95-heading {
+  font-weight: bold;
+}
+
+.win95-paragraph {
+  font-size: 12px;
+}
+
+.win95-image {
+  border: 1px solid var(--win95-gray-dark);
+  background-color: var(--win95-white);
+}
+
+/* Website Builder Drop Zones */
+.website-builder {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  background-color: var(--win95-white);
+  margin: 8px;
+  box-shadow: var(--win95-shadow-inner);
+}
+
+.website-section {
+  min-height: 80px;
+  border: 1px dashed transparent;
+  padding: 4px;
+}
+
+.website-section.active-dropzone {
+  border-color: blue;
+  background-color: rgba(0, 0, 255, 0.05);
+}
+
+.website-header {
+  min-height: 60px;
+}
+
+.website-navbar {
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+}
+
+.website-content {
+  flex: 1;
+  min-height: 200px;
+}
+
+.website-footer {
+  min-height: 60px;
+}
+
+/* Drop Zone Styling */
+.win95-dropzone {
+  border: 1px dashed var(--win95-gray-dark);
+  background-color: var(--win95-gray-light);
+  min-height: 100px;
+  margin: 8px;
+  padding: 8px;
+  box-shadow: var(--win95-shadow-inner);
+  display: flex;
+  flex-direction: column;
+}
+
+.win95-dropzone-hover {
+  background-color: #e0e8ff;
+  border-color: #0000aa;
+}
+
+.win95-dropzone-label {
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.win95-dropzone-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-height: 60px;
+}
+
+.dropped-component {
+  display: flex;
+  align-items: center;
+  padding: 4px 8px;
+  background-color: var(--win95-gray);
+  box-shadow: var(--win95-shadow-outer);
+  margin: 2px;
+  position: relative;
+}
+
+.incorrect-placement {
+  border: 1px solid red;
+  background-color: #ffdddd;
+}
+
+/* Reference Window */
+.reference-window {
+  width: 300px;
+  height: 400px;
+  overflow: auto;
+}
+
+.reference-design {
+  background-color: var(--win95-white);
+  border: 1px inset var(--win95-gray-dark);
+  padding: 8px;
+  margin-top: 8px;
+}
+
+.ref-header {
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.ref-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ref-component {
+  padding: 4px;
+  border: 1px solid var(--win95-gray-dark);
+}
+
+/* Error Dialog */
+.win95-error-dialog {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--win95-gray);
+  border: 2px outset var(--win95-gray-light);
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+  width: 300px;
+  z-index: 2000;
+}
+
+.win95-dialog-content {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.win95-error-icon {
+  width: 32px;
+  height: 32px;
+  background-color: red;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-weight: bold;
+  font-size: 24px;
+}
+
+.win95-error-message {
+  text-align: center;
+}
+
+/* Windows 95 Taskbar */
+.win95-taskbar {
+  height: 28px;
+  background-color: var(--win95-gray);
+  box-shadow: var(--win95-shadow-outer);
+  display: flex;
+  align-items: center;
+  padding: 0 2px;
+  z-index: 1000;
+}
+
+.win95-start-button {
+  display: flex;
+  align-items: center;
+  background-color: var(--win95-gray);
+  border: 2px outset var(--win95-gray-light);
+  padding: 2px 8px;
+  margin-right: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.win95-logo {
+  background-color: var(--win95-blue);
+  color: var(--win95-white);
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 4px;
+}
+
+.win95-clock {
+  margin-left: auto;
+  border: 1px inset var(--win95-gray-dark);
+  padding: 2px 8px;
+  background-color: var(--win95-white);
+  font-size: 12px;
+}
+
+/* Game Effect Classes */
+.slow-cursor * {
+  cursor: progress !important;
+}
+
+.screen-frozen {
+  pointer-events: none;
+  opacity: 0.7;
+  filter: grayscale(50%);
+}
+
+/* New Website Builder Components */
+.component-category {
+  margin-top: 12px;
+  border-top: 1px solid var(--win95-gray-dark);
+  padding-top: 8px;
+}
+
+.category-title {
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+/* Component Properties Panel */
+.properties-panel {
+  background-color: var(--win95-gray);
+  box-shadow: var(--win95-shadow-outer);
+  width: 250px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.property-input {
+  border: 2px inset var(--win95-gray-light);
+  background-color: var(--win95-white);
+  padding: 2px 4px;
+  margin-bottom: 8px;
+}
+
+.property-select {
+  border: 2px inset var(--win95-gray-light);
+  background-color: var(--win95-white);
+  padding: 2px 4px;
+  margin-bottom: 8px;
+}
+
+/* Additional Website Components */
+.website-sidebar {
+  width: 25%;
+  background-color: var(--win95-gray-light);
+}
+
+.website-main {
+  width: 75%;
+}
+
+.website-section-label {
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.1);
+  padding: 4px;
+  font-size: 11px;
+  pointer-events: none;
+}

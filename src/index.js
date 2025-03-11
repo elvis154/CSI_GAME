@@ -6,6 +6,7 @@ import LoginPage from "./LoginPage"; // Import LoginPage
 import ErrorPage from "./ErrorPage"; // Import ErrorPage (this is for the error page)
 import Win95Terminal from "./Win95Terminal";
 import Windows95Matrix from "./Windows95Matrix";
+import Win95Terminal1 from "./DndFrontend";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -15,6 +16,7 @@ root.render(
         <Route path="/" element={<LoginPage />} /> 
         <Route path="/error" element={<ErrorPage />} /> 
         <Route path="/Win" element={<Win95Terminal/>} />
+        <Route path="/Win1" element={<Win95Terminal1/>} />
         <Route path="/matrix" element={<Windows95Matrix/>} />
       </Routes>
     </BrowserRouter>
