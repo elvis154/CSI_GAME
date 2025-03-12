@@ -27,29 +27,43 @@ const WebsiteSections = ({ onComponentDrop }) => {
   }));
 
   // Handle component drop
-  const handleDrop = (e, sectionId) => {
-    e.preventDefault();
-    try {
-      const componentData = JSON.parse(e.dataTransfer.getData('component'));
-      const componentNumericId = componentData.id.split('-')[1];
+  const [placedComponents, setPlacedComponents] = useState({});
 
-      if (componentNumericId === fixedSectionIds[sectionId].toString()) {
-        onComponentDrop(componentData, sectionId, true);
-      } else {
-        setErrorMessage(
-          `Incorrect placement! Component '${componentData.label}' with ID '${componentData.id}' doesn't match section '${sectionId}-${fixedSectionIds[sectionId]}'`
-        );
-        freezeScreen(true);
-        setTimeout(() => {
-          freezeScreen(false);
-          setErrorMessage(null);
-        }, (Math.random() * 5 + 5) * 1000);
-        onComponentDrop(componentData, sectionId, false);
+  const handleDrop = (e, sectionId) => {
+      e.preventDefault();
+      try {
+          const componentData = JSON.parse(e.dataTransfer.getData("component"));
+          const componentNumericId = componentData.id.split('-')[1];
+  
+          // Check if the component is already placed
+          if (placedComponents[sectionId]) {
+              setErrorMessage(`Section '${sectionId}' already has a component.`);
+              return;
+          }
+  
+          // Check if the dropped component matches the section
+          if (componentNumericId === fixedSectionIds[sectionId].toString()) {
+              setPlacedComponents((prev) => ({
+                  ...prev,
+                  [sectionId]: componentData
+              }));
+              onComponentDrop(componentData, sectionId, true);
+          } else {
+              setErrorMessage(
+                  `Incorrect placement! '${componentData.label}' cannot be placed in '${sectionId}'.`
+              );
+              freezeScreen(true);
+              setTimeout(() => {
+                  freezeScreen(false);
+                  setErrorMessage(null);
+              }, (Math.random() * 5 + 5) * 1000);
+              onComponentDrop(componentData, sectionId, false);
+          }
+      } catch (error) {
+          console.error("Error handling drop:", error);
       }
-    } catch (error) {
-      console.error('Error handling drop:', error);
-    }
   };
+  
 
   return (
     <div className="website-builder">
@@ -74,11 +88,11 @@ const WebsiteSections = ({ onComponentDrop }) => {
             {hoveredSection === section.id ? (
               <div className="section-id-reveal">
                 <div className="section-id">
-                  ID: {section.id}-{fixedSectionIds[section.id]}
+                  ID: {fixedSectionIds[section.id]}
                 </div>
               </div>
             ) : (
-              <div className="section-label">{section.label}</div>
+              <div className="section-label"></div>
             )}
           </div>
         </div>

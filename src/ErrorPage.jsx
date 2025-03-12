@@ -12,7 +12,7 @@ const ErrorPage = () => {
         <p className="error-message">
           This program has performed an illegal operation and will be shut down.
         </p>
-        <button className="error-button" onClick={() => navigate("/")}>
+        <button className="error-button" onClick={() => navigate("/Win1")}>
           OK
         </button>
       </div>
