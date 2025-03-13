@@ -98,7 +98,7 @@ const DraggableComponent = ({ id, type, label, icon, colorOptions = [] }) => {
       <div className="component-icon">{icon}</div>
       <div className="component-label">
         {label}
-        <div className="component-id">ID: {id}{getCurrentColorIndex()}</div>
+        <div className="component-id">ID: {id}</div>
       </div>
       
       <div className="color-dropdown-container" ref={dropdownRef}>
