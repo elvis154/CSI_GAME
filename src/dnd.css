@@ -39,6 +39,12 @@ body {
   overflow: hidden;
 }
 
+.game-container.screen-frozen {
+  pointer-events: none;
+  filter: contrast(0.8) brightness(0.8);
+  animation: flicker 0.3s infinite;
+}
+
 /* Windows 95 Window Styling */
 .win95-window {
   background-color: var(--win95-gray);
@@ -100,14 +106,14 @@ body {
 
 /* Component Sidebar */
 .components-sidebar {
-  width: 220px; /* Fixed width */
-  min-width: 220px; /* Prevent shrinking */
+  width: 220px;
+  min-width: 220px;
   background-color: var(--win95-gray);
   box-shadow: var(--win95-shadow-outer);
   display: flex;
   flex-direction: column;
   overflow-y: auto;
-  flex-shrink: 0; /* Prevent shrinking */
+  flex-shrink: 0;
 }
 
 .sidebar-title {
@@ -124,7 +130,7 @@ body {
   gap: 8px;
 }
 
-/* Component Color Picker and Properties Panel */
+/* Component Properties */
 .component-properties {
   border-top: 1px solid var(--win95-gray-dark);
   padding: 8px;
@@ -157,6 +163,10 @@ body {
   border: 1px inset var(--win95-gray-dark);
 }
 
+.color-option.selected {
+  box-shadow: 0 0 0 2px white, 0 0 0 4px #666;
+}
+
 /* Draggable Component Styling */
 .win95-component {
   padding: 6px;
@@ -168,6 +178,7 @@ body {
   gap: 8px;
   user-select: none;
   max-width: 180px;
+  position: relative;
 }
 
 .win95-component.dragging {
@@ -185,11 +196,115 @@ body {
   opacity: 0.8;
 }
 
+.component-target-indicator {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color: var(--win95-blue);
+  color: var(--win95-white);
+  font-size: 10px;
+  padding: 2px 4px;
+  border-radius: 2px;
+  display: none;
+}
+
+.win95-component:hover .component-target-indicator {
+  display: block;
+}
+
+/* Website Layout Container */
+.website-builder {
+  flex: 1;
+  width: calc(100% - 16px);
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--win95-white);
+  padding: 8px;
+  box-shadow: var(--win95-shadow-inner);
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin: 8px;
+  box-sizing: border-box;
+}
+
+.website-builder-title {
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  padding: 5px 0;
+  border-bottom: 1px solid #a0a0a0;
+}
+
+.website-builder-hint {
+  font-size: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  margin-bottom: 5px;
+  background-color: #ffffc0;
+  border: 1px solid #a0a0a0;
+}
+
+/* Website Sections */
+.website-section {
+  width: 100%;
+  min-height: 60px;
+  border: 1px dashed var(--win95-gray-dark);
+  margin-bottom: 8px;
+  padding: 8px;
+  background-color: var(--win95-gray-light);
+  position: relative;
+  box-sizing: border-box;
+}
+
+.website-section.section-highlighted {
+  background-color: #e0e0ff;
+  border: 2px dashed #8080ff;
+}
+
 .website-section.active-dropzone {
   border-color: blue;
   background-color: rgba(0, 0, 255, 0.05);
 }
 
+.website-section.section-filled {
+  background-color: rgba(0, 255, 0, 0.3);
+}
+
+.section-id-reveal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  animation: pulse 1.5s infinite;
+}
+
+.section-id {
+  font-weight: bold;
+  font-size: 16px;
+  color: var(--win95-blue);
+  text-align: center;
+}
+
+.section-description {
+  font-size: 12px;
+  margin-top: 4px;
+  text-align: center;
+  color: var(--win95-black);
+}
+
+.section-content {
+  text-align: center;
+  color: #808080;
+}
+
+/* Website Structure Sections */
 .website-header {
   min-height: 60px;
 }
@@ -209,7 +324,35 @@ body {
   min-height: 60px;
 }
 
-/* Drop Zone Styling */
+.website-sidebar {
+  width: 25%;
+  background-color: var(--win95-gray-light);
+}
+
+.website-main {
+  width: 75%;
+}
+
+.website-section-label {
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.1);
+  padding: 4px;
+  font-size: 11px;
+  pointer-events: none;
+}
+
+/* Drop Area Container */
+.drop-areas {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* Dropzone Styling */
 .win95-dropzone {
   border: 1px dashed var(--win95-gray-dark);
   background-color: var(--win95-gray-light);
@@ -238,6 +381,7 @@ body {
   min-height: 60px;
 }
 
+/* Dropped Component Styling */
 .dropped-component {
   display: flex;
   align-items: center;
@@ -253,9 +397,29 @@ body {
   background-color: #ffdddd;
 }
 
+.section-component {
+  background-color: var(--win95-gray);
+  box-shadow: var(--win95-shadow-outer);
+  padding: 6px 10px;
+  margin: 4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.component-matched {
+  background-color: #DDFFDD;
+  border: 1px solid #00AA00;
+}
+
+.component-mismatched {
+  background-color: #FFDDDD;
+  border: 1px solid #AA0000;
+}
+
 /* Error Dialog */
 .win95-error-dialog {
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -289,6 +453,14 @@ body {
 
 .win95-error-message {
   text-align: center;
+}
+
+.win95-button {
+  padding: 4px 15px;
+  background-color: var(--win95-gray);
+  border: 1px solid #000000;
+  box-shadow: inset 1px 1px 0 #ffffff, inset -1px -1px 0 #707070;
+  cursor: pointer;
 }
 
 /* Windows 95 Taskbar */
@@ -332,262 +504,7 @@ body {
   font-size: 12px;
 }
 
-/* Game Effect Classes */
-.slow-cursor * {
-  cursor: progress !important;
-}
-
-.screen-frozen {
-  pointer-events: none;
-  opacity: 0.7;
-  filter: grayscale(50%);
-}
-
-/* New Website Builder Components */
-.component-category {
-  margin-top: 12px;
-  border-top: 1px solid var(--win95-gray-dark);
-  padding-top: 8px;
-}
-
-.category-title {
-  font-weight: bold;
-  margin-bottom: 4px;
-}
-
-/* Additional Website Components */
-.website-sidebar {
-  width: 25%;
-  background-color: var(--win95-gray-light);
-}
-
-.website-main {
-  width: 75%;
-}
-
-.website-section-label {
-  text-align: center;
-  background-color: rgba(0, 0, 0, 0.1);
-  padding: 4px;
-  font-size: 11px;
-  pointer-events: none;
-}
-
-/* Website Builder and Section Styling */
-
-.drop-areas {
-  flex: 1;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-  overflow-x: hidden;
-}
-
-.website-builder {
-  flex: 1;
-  width: 100%;
-  height: auto; /* Let it grow vertically */
-  display: flex;
-  flex-direction: column;
-  background-color: var(--win95-white);
-  padding: 8px;
-  box-shadow: var(--win95-shadow-inner);
-  overflow-y: visible; /* Allow content to expand */
-  overflow-x: hidden; /* Prevent horizontal scroll */
-  margin: 0;
-  box-sizing: border-box;
-}
-
-.website-section {
-  width: 100%;
-  min-height: 60px;
-  border: 1px dashed var(--win95-gray-dark);
-  margin-bottom: 8px;
-  padding: 8px;
-  background-color: var(--win95-gray-light);
-  position: relative;
-  box-sizing: border-box;
-  max-width: 100%; /* Ensure sections don't overflow */
-}
-
-.website-section.section-highlighted {
-  background-color: #e0e0ff;
-  border: 2px dashed #8080ff;
-}
-
-.website-builder-title {
-  font-weight: bold;
-  font-size: 14px;
-  padding: 5px 0;
-  border-bottom: 1px solid #a0a0a0;
-}
-
-.website-builder-hint {
-  font-size: 12px;
-  padding: 5px;
-  margin-bottom: 5px;
-  background-color: #ffffc0;
-  border: 1px solid #a0a0a0;
-}
-
-.section-content {
-  text-align: center;
-  color: #808080;
-}
-
-.section-id-reveal {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  animation: pulse 1.5s infinite;
-}
-
-.section-id {
-  font-weight: bold;
-  font-size: 16px;
-  color: var(--win95-blue);
-  text-align: center;
-}
-
-.section-description {
-  font-size: 12px;
-  margin-top: 4px;
-  text-align: center;
-  color: var(--win95-black);
-}
-.website-builder {
-  width: 100vw; /* Full width */
-  height: 100vh; /* Full height */
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* Centers the sections */
-  justify-content: flex-start; /* Aligns sections at the top */
-  background-color: var(--win95-white);
-  padding: 16px;
-  overflow-y: visible; /* Allow content to expand */
-  overflow-x: hidden; /* Prevent horizontal scroll */
-}
-
-.website-section {
-  width: 100%; 
-  border: 1px dashed var(--win95-gray-dark);
-  margin-bottom: 12px;
-  padding: 12px;
-  background-color: var(--win95-gray-light);
-  text-align: center;
-  font-size: 16px;
-  font-weight: bold;
-  position: relative;
-  transition: background-color 0.2s;
-  box-sizing: border-box;
-}
-
-.website-section.section-highlighted {
-  background-color: #e0e0ff;
-  border: 2px dashed #8080ff;
-}
-
-.website-builder-title {
-  font-weight: bold;
-  font-size: 14px;
-  padding: 5px 0;
-  border-bottom: 1px solid #a0a0a0;
-}
-
-.website-builder-hint {
-  font-size: 12px;
-  padding: 5px;
-  margin-bottom: 5px;
-  background-color: #ffffc0;
-  border: 1px solid #a0a0a0;
-}
-
-.section-content {
-  text-align: center;
-  color: #808080;
-}
-
-.section-id-reveal {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  animation: pulse 1.5s infinite;
-}
-
-.section-id {
-  font-weight: bold;
-  font-size: 16px;
-  color: var(--win95-blue);
-  text-align: center;
-}
-
-
-.section-description {
-  font-size: 12px;
-  margin-top: 4px;
-  text-align: center;
-  color: var(--win95-black);
-}
-
-/* Animation for the section ID reveal */
-@keyframes pulse {
-  0% { opacity: 0.7; }
-  50% { opacity: 1; }
-  100% { opacity: 0.7; }
-}
-
-/* Dropped component styling inside sections */
-.section-component {
-  background-color: var(--win95-gray);
-  box-shadow: var(--win95-shadow-outer);
-  padding: 6px 10px;
-  margin: 4px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.component-matched {
-  background-color: #DDFFDD;
-  border: 1px solid #00AA00;
-}
-
-.component-mismatched {
-  background-color: #FFDDDD;
-  border: 1px solid #AA0000;
-}
-
-/* Enhance draggable component to show target section */
-.win95-component {
-  position: relative;
-}
-
-.component-target-indicator {
-  position: absolute;
-  top: -8px;
-  right: -8px;
-  background-color: var(--win95-blue);
-  color: var(--win95-white);
-  font-size: 10px;
-  padding: 2px 4px;
-  border-radius: 2px;
-  display: none;
-}
-
-.win95-component:hover .component-target-indicator {
-  display: block;
-}
-
-
-/* Enhanced styling for draggable components with dropdown */
+/* Enhanced Component Styling */
 .draggable-component {
   display: flex;
   align-items: center;
@@ -607,16 +524,6 @@ body {
 .draggable-component:active {
   cursor: grabbing;
 }
-
-.section-highlighted {
-  border: 2px dashed green;
-  background-color: rgba(0, 255, 0, 0.1);
-}
-
-.section-filled {
-  background-color: rgba(0, 255, 0, 0.3);
-}
-
 
 .draggable-component.dragging {
   opacity: 0.7;
@@ -641,10 +548,25 @@ body {
   margin-top: 2px;
 }
 
-/* Dropdown arrow button styling */
+/* Color dropdown */
 .color-dropdown-container {
   position: relative;
   margin-left: 4px;
+  display: flex;
+  align-items: center;
+}
+
+.color-selection-display {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.selected-color-indicator {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1px solid #ddd;
 }
 
 .dropdown-arrow-button {
@@ -666,31 +588,13 @@ body {
   display: block;
 }
 
-/* Color dropdown styling */
-.color-dropdown-container {
-  position: relative;
-  display: flex;
-  align-items: center;
+.dropdown-arrow-button:hover {
+  background-color: #e0e0e0;
 }
 
-.color-selection-display {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.selected-color-indicator {
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  border: 1px solid #ddd;
-}
-
-.dropdown-arrow-button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 2px 4px;
+.dropdown-arrow-button:active {
+  box-shadow: inset -1px -1px 0 #ffffff, inset 1px 1px 0 #707070;
+  padding: 1px 0 0 1px;
 }
 
 .color-dropdown {
@@ -708,198 +612,26 @@ body {
   box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
-.color-option {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  cursor: pointer;
-  border: 1px solid #ddd;
-  transition: transform 0.1s;
+/* Game Effect Classes */
+.slow-cursor * {
+  cursor: progress !important;
 }
 
-.color-option:hover {
-  transform: scale(1.1);
-}
-
-.color-option.selected {
-  box-shadow: 0 0 0 2px white, 0 0 0 4px #666;
-}
-
-/* Selected color indicator */
-.selected-color-indicator {
-  width: 8px;
-  height: 8px;
-  border: 1px solid #000000;
-  margin-left: 5px;
-}
-
-/* Windows 95 style hover effect for buttons */
-.dropdown-arrow-button:hover {
-  background-color: #e0e0e0;
-}
-
-.dropdown-arrow-button:active {
-  box-shadow: inset -1px -1px 0 #ffffff, inset 1px 1px 0 #707070;
-  padding: 1px 0 0 1px;
-}
-
-/* Component types - add pixelated effects */
-.draggable-component[class*="color-"] {
-  image-rendering: pixelated;
-}
-
-.website-builder {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  overflow: auto;
-  background-color: var(--win95-white);
-  margin: 8px;
-  box-shadow: var(--win95-shadow-inner);
-  padding: 8px;
-}
-
-.website-builder-title {
-  font-weight: bold;
-  font-size: 14px;
-  padding: 5px 0;
-  border-bottom: 1px solid #a0a0a0;
-}
-
-.website-builder-hint {
-  font-size: 12px;
-  padding: 5px;
-  margin-bottom: 5px;
-  background-color: #ffffc0;
-  border: 1px solid #a0a0a0;
-}
-
-.website-section {
-  width: 100%;
-  min-height: 60px;
-  border: 1px dashed var(--win95-gray-dark);
-  margin-bottom: 8px;
-  padding: 8px;
-  background-color: var(--win95-gray-light);
-  position: relative;
-  transition: background-color 0.2s;
-  box-sizing: border-box;
-}
-
-.website-section.section-highlighted {
-  background-color: #e0e0ff;
-  border: 1px dashed #8080ff;
-}
-
-.section-content {
-  text-align: center;
-  color: #808080;
-}
-
-.section-id-reveal {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  animation: pulse 1.5s infinite;
-}
-
-.section-id {
-  font-weight: bold;
-  font-size: 16px;
-  color: var(--win95-blue);
-  text-align: center;
-}
-.section-description {
-  font-size: 11px;
-}
-
-/* Error dialog styles */
-.win95-error-dialog {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #c0c0c0;
-  border: 1px solid #000000;
-  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5);
-  z-index: 1000;
-  width: 300px;
-}
-
-.win95-title-bar {
-  background-color: #000080;
-  color: white;
-  padding: 2px 4px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.win95-close-btn {
-  background: #c0c0c0;
-  border: 1px solid #a0a0a0;
-  width: 16px;
-  height: 16px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 12px;
-  cursor: pointer;
-}
-
-.win95-dialog-content {
-  padding: 15px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.win95-error-icon {
-  background-color: #ff0000;
-  color: white;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.win95-error-message {
-  margin-bottom: 15px;
-  text-align: center;
-}
-
-.win95-button {
-  padding: 4px 15px;
-  background-color: #c0c0c0;
-  border: 1px solid #000000;
-  box-shadow: inset 1px 1px 0 #ffffff, inset -1px -1px 0 #707070;
-  cursor: pointer;
-}
-
-/* Game container styles for frozen screen effect */
-.game-container.screen-frozen {
+.screen-frozen {
   pointer-events: none;
-  filter: contrast(0.8) brightness(0.8);
-  animation: flicker 0.3s infinite;
+  opacity: 0.7;
+  filter: grayscale(50%);
+}
+
+/* Animations */
+@keyframes pulse {
+  0% { opacity: 0.7; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+  100% { opacity: 0.7; transform: scale(1); }
 }
 
 @keyframes flicker {
   0% { opacity: 0.9; }
   50% { opacity: 1; }
   100% { opacity: 0.9; }
-}
-
-
-@keyframes pulse {
-  0% { opacity: 0.7; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.05); }
-  100% { opacity: 0.7; transform: scale(1); }
 }
