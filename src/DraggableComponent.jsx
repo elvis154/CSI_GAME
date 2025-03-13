@@ -4,25 +4,30 @@ import './dnd.css';
 const DraggableComponent = ({ id, type, label, icon, colorOptions = [] }) => {
   // If no color options are provided, generate some default colors
   const defaultColors = colorOptions.length > 0 ? colorOptions : [
-    '#000000', // Black
-    '#4285F4', // Blue
-    '#EA4335', // Red
-    '#FBBC05', // Yellow
-    '#34A853', // Green
-    '#9C27B0', // Purple
-    '#FF9800', // Orange
-    '#795548'  // Brown
+    '#000000', // Black (0)
+    '#4285F4', // Blue (1)
+    '#EA4335', // Red (2)
+    '#FBBC05', // Yellow (3)
+    '#34A853', // Green (4)
+    '#9C27B0', // Purple (5)
+    '#FF9800', // Orange (6)
+    '#795548'  // Brown (7)
   ];
 
   const [selectedColor, setSelectedColor] = useState(defaultColors[0]);
   const [isColorMenuOpen, setIsColorMenuOpen] = useState(false);
   const dropdownRef = useRef(null);
   
-  // Generate unique color IDs for each color option
-  const colorOptionsWithIds = defaultColors.map(color => ({
-    id: `${id}-color-${Math.floor(Math.random() * 1000)}`,
+  // Generate unique color IDs for each color option (0-7 for 8 colors)
+  const colorOptionsWithIds = defaultColors.map((color, index) => ({
+    id: index,
     color
   }));
+  
+  // Find current color index
+  const getCurrentColorIndex = () => {
+    return colorOptionsWithIds.findIndex(option => option.color === selectedColor);
+  };
   
   // Handle click outside to close dropdown
   useEffect(() => {
@@ -40,13 +45,21 @@ const DraggableComponent = ({ id, type, label, icon, colorOptions = [] }) => {
   
   // Handle drag start
   const handleDragStart = (e) => {
-    // Set the drag data with component info including selected color
+    // Get current color index (0-7)
+    const colorIndex = getCurrentColorIndex();
+    
+    // Append color index to component id (e.g., 1001 becomes 10011 for blue)
+    const idWithColor = `${id}${colorIndex}`;
+    
+    // Set the drag data with component info including modified ID and selected color
     const componentData = {
-      id,
+      id: idWithColor, // Modified ID with color index appended
+      originalId: id, // Keep original ID for reference
       type,
       label,
       icon,
-      color: selectedColor
+      color: selectedColor,
+      colorIndex: colorIndex
     };
     
     e.dataTransfer.setData('component', JSON.stringify(componentData));
@@ -85,7 +98,7 @@ const DraggableComponent = ({ id, type, label, icon, colorOptions = [] }) => {
       <div className="component-icon">{icon}</div>
       <div className="component-label">
         {label}
-        <div className="component-id">ID: {id}</div>
+        <div className="component-id">ID: {id}{getCurrentColorIndex()}</div>
       </div>
       
       <div className="color-dropdown-container" ref={dropdownRef}>
@@ -115,7 +128,7 @@ const DraggableComponent = ({ id, type, label, icon, colorOptions = [] }) => {
                 style={{ backgroundColor: color }}
                 onClick={(e) => selectColor(color, e)}
                 data-color-id={colorId}
-                title={color}
+                title={`${color} (${colorId})`}
               ></div>
             ))}
           </div>

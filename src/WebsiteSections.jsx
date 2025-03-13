@@ -10,14 +10,14 @@ const WebsiteSections = ({ onComponentDrop }) => {
   
   // Fixed section IDs - these will be shown on hover
   const sectionIds = {
-    header: 1001,
-    navbar: 2002,
-    hero: 3003,
-    content: 4004,
-    sidebar: 5005,
-    features: 6006,
-    contact: 7007,
-    footer: 8008,
+    header: 10011,
+    navbar: 20025,
+    hero: 30032,
+    content: 40044,
+    sidebar: 50054,
+    features: 60061,
+    contact: 70070,
+    footer: 80083,
   };
 
   // Website sections
