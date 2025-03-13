@@ -1,9 +1,45 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './terminal.css';
 
 const DropZone = ({ id, label, onComponentDrop, checkCorrectPlacement }) => {
   const [isOver, setIsOver] = useState(false);
   const [droppedComponents, setDroppedComponents] = useState([]);
+  const [zoneHeight, setZoneHeight] = useState(getInitialHeight());
+  const dropZoneRef = useRef(null);
+
+  // Set initial height based on section type
+  function getInitialHeight() {
+    switch(id) {
+      case 'navbar':
+        return 60;
+      case 'hero':
+        return 150;
+      case 'footer':
+        return 80;
+      default:
+        return 200;
+    }
+  }
+
+  // Update zone height when components change
+  useEffect(() => {
+    if (droppedComponents.length === 0) {
+      setZoneHeight(getInitialHeight());
+      return;
+    }
+
+    // Allow a small delay for images to load
+    const timer = setTimeout(() => {
+      if (dropZoneRef.current) {
+        // Calculate needed height based on content
+        const contentHeight = dropZoneRef.current.scrollHeight;
+        // Set minimum height but allow growth
+        setZoneHeight(Math.max(getInitialHeight(), contentHeight));
+      }
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, [droppedComponents, id]);
 
   const handleDragOver = (e) => {
     e.preventDefault();
@@ -49,24 +85,24 @@ const DropZone = ({ id, label, onComponentDrop, checkCorrectPlacement }) => {
 
   // Get dropzone style based on which section it is
   const getDropZoneStyle = () => {
+    const baseStyle = {
+      height: `${zoneHeight}px`,
+      transition: 'height 0.3s ease'
+    };
+    
     switch(id) {
-      case 'navbar':
-        return { height: '60px' };
-      case 'hero':
-        return { height: '150px' };
       case 'sidebar':
-        return { width: '30%', minHeight: '300px' };
+        return { ...baseStyle, width: '30%', minHeight: '300px' };
       case 'main-content':
-        return { width: '70%', minHeight: '300px' };
-      case 'footer':
-        return { height: '80px' };
+        return { ...baseStyle, width: '70%', minHeight: '300px' };
       default:
-        return {};
+        return baseStyle;
     }
   };
 
   return (
     <div 
+      ref={dropZoneRef}
       className={`win95-dropzone win95-dropzone-${id} ${isOver ? 'win95-dropzone-hover' : ''}`}
       style={getDropZoneStyle()}
       onDragOver={handleDragOver}
@@ -79,14 +115,32 @@ const DropZone = ({ id, label, onComponentDrop, checkCorrectPlacement }) => {
           <div 
             key={component.instanceId}
             className={`dropped-component win95-${component.type} ${!component.isCorrect ? 'incorrect-placement' : ''}`}
-            style={{
-              backgroundColor: component.color,
-              fontSize: component.size === 'large' ? '14px' : component.size === 'small' ? '10px' : '12px',
-              textAlign: component.align || 'left'
-            }}
           >
-            {component.icon && <img src={component.icon} alt={component.label} className="component-icon" />}
-            <span>{component.label}</span>
+            {component.imagePath ? (
+              <div className="component-image-container">
+                <img 
+                  src={component.imagePath} 
+                  alt={component.label}
+                  className="component-preview-image"
+                  onLoad={() => {
+                    // Recalculate height after image loads
+                    if (dropZoneRef.current) {
+                      const contentHeight = dropZoneRef.current.scrollHeight;
+                      setZoneHeight(Math.max(getInitialHeight(), contentHeight));
+                    }
+                  }}
+                />
+                <div className="component-label">
+                  {component.icon && <span className="component-icon">{component.icon}</span>}
+                  <span>{component.label}</span>
+                </div>
+              </div>
+            ) : (
+              <>
+                {component.icon && <span className="component-icon">{component.icon}</span>}
+                <span>{component.label}</span>
+              </>
+            )}
           </div>
         ))}
       </div>
