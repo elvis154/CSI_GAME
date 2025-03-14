@@ -59,6 +59,7 @@ const GameContainer = () => {
   // Handle component drop and check placement
   const handleDrop = (component, zoneId) => {
     const isCorrect = checkPlacement(component.id, zoneId);
+    console.log(`Component ${component.id} dropped in zone ${zoneId}. Correct: ${isCorrect}`);
     handleComponentDrop(component, zoneId, isCorrect);
     
     if (!isCorrect) {

@@ -69,7 +69,6 @@ const WebsiteSections = ({ onComponentDrop }) => {
           console.log("Matching:", compNumericId, baseComponentId);
           return compNumericId === baseComponentId; // Compare with the 4-digit base ID
         });
-  
         if (matchingComponent) {
           // Create an enhanced component object with the image path
           const enhancedComponent = {
@@ -95,6 +94,7 @@ const WebsiteSections = ({ onComponentDrop }) => {
         }
       } else {
         // Handle incorrect placement
+        console.log("Incorrect placement!");
         setErrorMessage(
           `Incorrect placement! Component ID ${componentNumericId} doesn't match section ID ${sectionIds[sectionId]}.`
         );

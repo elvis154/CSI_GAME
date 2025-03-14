@@ -42,7 +42,9 @@ export const GameProvider = ({ children }) => {
   
   // Check if component placement is correct (based on ID pattern)
   const checkPlacement = (componentId, sectionId) => {
-    return componentId.startsWith(`${sectionId}-`);
+    console.log("checkPlacement", componentId, sectionId, level)
+    const lastChar = componentId.slice(-1);
+    return (componentId.startsWith(`${sectionId}-`) && lastChar === level.toString());
   };
   
   // Handle component drop
@@ -54,6 +56,7 @@ export const GameProvider = ({ children }) => {
     ]);
     
     // Update score
+    console.log("cooooo", isCorrect)
     if (isCorrect) {
       setScore(prevScore => prevScore + 10);
     } else {
