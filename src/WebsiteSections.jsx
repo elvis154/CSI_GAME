@@ -16,7 +16,7 @@ const WebsiteSections = ({ onComponentDrop }) => {
     content: 40041,
     imageTop: 45050,
     imageLeft: 50050,
-    contactForm: 60061,
+    contactForm: 60071,
     buttons: 65062,
     buttonsAlt: 70070, // New ID for the second button
     footer: 80082,
@@ -122,119 +122,154 @@ const WebsiteSections = ({ onComponentDrop }) => {
       <div className="website-layout">
         {/* Top sections: Navbar and Login */}
         <div className="website-top">
+          {/* Navbar Section */}
+                    <div
+                    id={`section-navbar`}
+                    className={`website-section navbar-section ${
+                    hoveredSection === "navbar" && !placedComponents["navbar"]?.imagePath
+                    ? "section-highlighted"
+                    : ""
+                    }`}
+                    onMouseEnter={() =>
+                    !placedComponents["navbar"]?.imagePath && setHoveredSection("navbar")
+                    }
+                    onMouseLeave={() =>
+                    !placedComponents["navbar"]?.imagePath && setHoveredSection(null)
+                    }
+                    onDragOver={(e) => e.preventDefault()}
+                    onDrop={(e) => handleDrop(e, "navbar")}
+                    >
+                    <div className="section-content">
+                    {hoveredSection === "navbar" &&
+                    !placedComponents["navbar"]?.imagePath && (
+                    <div className="section-id-reveal">
+                    <div className="section-id">ID: {sectionIds.navbar}</div>
+                    </div>
+                    )}
+                    {placedComponents["navbar"]?.imagePath && (
+                    <div className="placed-component" style={{ width: '100%', height: '100%', position: 'relative' }}>
+                    <img
+                        src={placedComponents["navbar"].imagePath}
+                        className="component-image"
+                        style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }}
+                    />
+                </div>
+                
+                    )}
+                    </div>
+                    </div>
+
+                    {/* Login Section */}
           <div
-            id={`section-navbar`}
-            className={`website-section navbar-section ${
-              hoveredSection === "navbar" &&
-              !placedComponents["navbar"]?.imagePath
+            id={`section-login`}
+            className={`website-section login-section ${
+              hoveredSection === "login" && !placedComponents["login"]?.imagePath
                 ? "section-highlighted"
                 : ""
             }`}
             onMouseEnter={() =>
-              !placedComponents["navbar"]?.imagePath &&
-              setHoveredSection("navbar")
+              !placedComponents["login"]?.imagePath && setHoveredSection("login")
             }
             onMouseLeave={() =>
-              !placedComponents["navbar"]?.imagePath && setHoveredSection(null)
+              !placedComponents["login"]?.imagePath && setHoveredSection(null)
             }
-            onDragOver={(e) => e.preventDefault()}
-            onDrop={(e) => handleDrop(e, "navbar")}
-          >
-            <div className="section-content">
-              {/* Show the ID on hover (only if no image is placed) */}
-              {hoveredSection === "navbar" &&
-                !placedComponents["navbar"]?.imagePath && (
-                  <div className="section-id-reveal">
-                    <div className="section-id">ID: {sectionIds.navbar}</div>
-                  </div>
-                )}
-
-              {/* Show the image if it exists */}
-              {placedComponents["navbar"]?.imagePath && (
-                <div className="placed-component">
-                  <img
-                    src={placedComponents["navbar"].imagePath}
-                    className="component-image"
-                  />
-                </div>
-              )}
-            </div>
-          </div>
-
-          <div
-            id={`section-login`}
-            className={`website-section login-section ${
-              hoveredSection === "login" ? "section-highlighted" : ""
-            }`}
-            onMouseEnter={() => setHoveredSection("login")}
-            onMouseLeave={() => setHoveredSection(null)}
             onDragOver={(e) => e.preventDefault()}
             onDrop={(e) => handleDrop(e, "login")}
           >
             <div className="section-content">
-              {hoveredSection === "login" ? (
-                <div className="section-id-reveal">
-                  <div className="section-id">ID: {sectionIds.login}</div>
-                </div>
-              ) : (
-                <div className="section-label">
-                  {placedComponents["login"]
-                    ? placedComponents["login"].label
-                    : ""}
+              {hoveredSection === "login" &&
+                !placedComponents["login"]?.imagePath && (
+                  <div className="section-id-reveal">
+                    <div className="section-id">ID: {sectionIds.login}</div>
+                  </div>
+                )}
+              {placedComponents["login"]?.imagePath && (
+                <div className="placed-component">
+                  <img
+                    src={placedComponents["login"].imagePath}
+                    className="component-image"
+                    style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }}
+                  />
                 </div>
               )}
             </div>
           </div>
         </div>
 
-        {/* Middle sections: Content, Images, Contact Form */}
+        {/* Middle sections */}
         <div className="website-middle">
           <div className="website-middle-left">
+            {/* Content Section */}
             <div
               id={`section-content`}
               className={`website-section content-section ${
-                hoveredSection === "content" ? "section-highlighted" : ""
+                hoveredSection === "content" && !placedComponents["content"]?.imagePath
+                  ? "section-highlighted"
+                  : ""
               }`}
-              onMouseEnter={() => setHoveredSection("content")}
-              onMouseLeave={() => setHoveredSection(null)}
+              onMouseEnter={() =>
+                !placedComponents["content"]?.imagePath &&
+                setHoveredSection("content")
+              }
+              onMouseLeave={() =>
+                !placedComponents["content"]?.imagePath && setHoveredSection(null)
+              }
               onDragOver={(e) => e.preventDefault()}
               onDrop={(e) => handleDrop(e, "content")}
             >
               <div className="section-content">
-                {hoveredSection === "content" ? (
-                  <div className="section-id-reveal">
-                    <div className="section-id">ID: {sectionIds.content}</div>
-                  </div>
-                ) : (
-                  <div className="section-label">
-                    {placedComponents["content"]
-                      ? placedComponents["content"].label
-                      : ""}
+                {hoveredSection === "content" &&
+                  !placedComponents["content"]?.imagePath && (
+                    <div className="section-id-reveal">
+                      <div className="section-id">ID: {sectionIds.content}</div>
+                    </div>
+                  )}
+                {placedComponents["content"]?.imagePath && (
+                  <div className="placed-component">
+                    <img
+                      src={placedComponents["content"].imagePath}
+                      className="component-image"
+                      style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }}
+                    />
                   </div>
                 )}
               </div>
             </div>
 
+            {/* Image Left Section */}
             <div
               id={`section-imageLeft`}
               className={`website-section image-section ${
-                hoveredSection === "imageLeft" ? "section-highlighted" : ""
+                hoveredSection === "imageLeft" &&
+                !placedComponents["imageLeft"]?.imagePath
+                  ? "section-highlighted"
+                  : ""
               }`}
-              onMouseEnter={() => setHoveredSection("imageLeft")}
-              onMouseLeave={() => setHoveredSection(null)}
+              onMouseEnter={() =>
+                !placedComponents["imageLeft"]?.imagePath &&
+                setHoveredSection("imageLeft")
+              }
+              onMouseLeave={() =>
+                !placedComponents["imageLeft"]?.imagePath &&
+                setHoveredSection(null)
+              }
               onDragOver={(e) => e.preventDefault()}
               onDrop={(e) => handleDrop(e, "imageLeft")}
             >
               <div className="section-content">
-                {hoveredSection === "imageLeft" ? (
-                  <div className="section-id-reveal">
-                    <div className="section-id">ID: {sectionIds.imageLeft}</div>
-                  </div>
-                ) : (
-                  <div className="section-label">
-                    {placedComponents["imageLeft"]
-                      ? placedComponents["imageLeft"].label
-                      : ""}
+                {hoveredSection === "imageLeft" &&
+                  !placedComponents["imageLeft"]?.imagePath && (
+                    <div className="section-id-reveal">
+                      <div className="section-id">ID: {sectionIds.imageLeft}</div>
+                    </div>
+                  )}
+                {placedComponents["imageLeft"]?.imagePath && (
+                  <div className="placed-component">
+                    <img
+                      src={placedComponents["imageLeft"].imagePath}
+                      className="component-image"
+                      style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }}
+                    />
                   </div>
                 )}
               </div>
@@ -242,107 +277,159 @@ const WebsiteSections = ({ onComponentDrop }) => {
           </div>
 
           <div className="website-middle-right">
+            {/* Image Top Section */}
             <div
               id={`section-imageTop`}
               className={`website-section image-section ${
-                hoveredSection === "imageTop" ? "section-highlighted" : ""
+                hoveredSection === "imageTop" &&
+                !placedComponents["imageTop"]?.imagePath
+                  ? "section-highlighted"
+                  : ""
               }`}
-              onMouseEnter={() => setHoveredSection("imageTop")}
-              onMouseLeave={() => setHoveredSection(null)}
+              onMouseEnter={() =>
+                !placedComponents["imageTop"]?.imagePath &&
+                setHoveredSection("imageTop")
+              }
+              onMouseLeave={() =>
+                !placedComponents["imageTop"]?.imagePath && setHoveredSection(null)
+              }
               onDragOver={(e) => e.preventDefault()}
               onDrop={(e) => handleDrop(e, "imageTop")}
             >
               <div className="section-content">
-                {hoveredSection === "imageTop" ? (
-                  <div className="section-id-reveal">
-                    <div className="section-id">ID: {sectionIds.imageTop}</div>
-                  </div>
-                ) : (
-                  <div className="section-label">
-                    {placedComponents["imageTop"]
-                      ? placedComponents["imageTop"].label
-                      : ""}
+                {hoveredSection === "imageTop" &&
+                  !placedComponents["imageTop"]?.imagePath && (
+                    <div className="section-id-reveal">
+                      <div className="section-id">ID: {sectionIds.imageTop}</div>
+                    </div>
+                  )}
+                {placedComponents["imageTop"]?.imagePath && (
+                  <div className="placed-component">
+                    <img
+                      src={placedComponents["imageTop"].imagePath}
+                      className="component-image"
+                      style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }}
+                    />
                   </div>
                 )}
               </div>
             </div>
 
+            {/* Contact Form Section */}
             <div
               id={`section-contactForm`}
               className={`website-section contact-form-section ${
-                hoveredSection === "contactForm" ? "section-highlighted" : ""
+                hoveredSection === "contactForm" &&
+                !placedComponents["contactForm"]?.imagePath
+                  ? "section-highlighted"
+                  : ""
               }`}
-              onMouseEnter={() => setHoveredSection("contactForm")}
-              onMouseLeave={() => setHoveredSection(null)}
+              onMouseEnter={() =>
+                !placedComponents["contactForm"]?.imagePath &&
+                setHoveredSection("contactForm")
+              }
+              onMouseLeave={() =>
+                !placedComponents["contactForm"]?.imagePath &&
+                setHoveredSection(null)
+              }
               onDragOver={(e) => e.preventDefault()}
               onDrop={(e) => handleDrop(e, "contactForm")}
             >
               <div className="section-content">
-                {hoveredSection === "contactForm" ? (
-                  <div className="section-id-reveal">
-                    <div className="section-id">
-                      ID: {sectionIds.contactForm}
+                {hoveredSection === "contactForm" &&
+                  !placedComponents["contactForm"]?.imagePath && (
+                    <div className="section-id-reveal">
+                      <div className="section-id">ID: {sectionIds.contactForm}</div>
                     </div>
-                  </div>
-                ) : (
-                  <div className="section-label">
-                    {placedComponents["contactForm"]
-                      ? placedComponents["contactForm"].label
-                      : ""}
+                  )}
+                {placedComponents["contactForm"]?.imagePath && (
+                  <div className="placed-component">
+                    <img
+                      src={placedComponents["contactForm"].imagePath}
+                      className="component-image"
+                      style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }}
+                    />
                   </div>
                 )}
               </div>
             </div>
 
             <div className="buttons-container">
+              {/* Buttons Section */}
               <div
                 id={`section-buttons`}
                 className={`website-section buttons-section ${
-                  hoveredSection === "buttons" ? "section-highlighted" : ""
+                  hoveredSection === "buttons" &&
+                  !placedComponents["buttons"]?.imagePath
+                    ? "section-highlighted"
+                    : ""
                 }`}
-                onMouseEnter={() => setHoveredSection("buttons")}
-                onMouseLeave={() => setHoveredSection(null)}
+                onMouseEnter={() =>
+                  !placedComponents["buttons"]?.imagePath &&
+                  setHoveredSection("buttons")
+                }
+                onMouseLeave={() =>
+                  !placedComponents["buttons"]?.imagePath &&
+                  setHoveredSection(null)
+                }
                 onDragOver={(e) => e.preventDefault()}
                 onDrop={(e) => handleDrop(e, "buttons")}
               >
                 <div className="section-content">
-                  {hoveredSection === "buttons" ? (
-                    <div className="section-id-reveal">
-                      <div className="section-id">ID: {sectionIds.buttons}</div>
-                    </div>
-                  ) : (
-                    <div className="section-label">
-                      {placedComponents["buttons"]
-                        ? placedComponents["buttons"].label
-                        : ""}
+                  {hoveredSection === "buttons" &&
+                    !placedComponents["buttons"]?.imagePath && (
+                      <div className="section-id-reveal">
+                        <div className="section-id">ID: {sectionIds.buttons}</div>
+                      </div>
+                    )}
+                  {placedComponents["buttons"]?.imagePath && (
+                    <div className="placed-component">
+                      <img
+                        src={placedComponents["buttons"].imagePath}
+                        className="component-image"
+                        style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }}
+                      />
                     </div>
                   )}
                 </div>
               </div>
 
-              {/* Second button with its own ID */}
+              {/* Buttons Alt Section */}
               <div
                 id={`section-buttonsAlt`}
                 className={`website-section buttons-section-placeholder ${
-                  hoveredSection === "buttonsAlt" ? "section-highlighted" : ""
+                  hoveredSection === "buttonsAlt" &&
+                  !placedComponents["buttonsAlt"]?.imagePath
+                    ? "section-highlighted"
+                    : ""
                 }`}
-                onMouseEnter={() => setHoveredSection("buttonsAlt")}
-                onMouseLeave={() => setHoveredSection(null)}
+                onMouseEnter={() =>
+                  !placedComponents["buttonsAlt"]?.imagePath &&
+                  setHoveredSection("buttonsAlt")
+                }
+                onMouseLeave={() =>
+                  !placedComponents["buttonsAlt"]?.imagePath &&
+                  setHoveredSection(null)
+                }
                 onDragOver={(e) => e.preventDefault()}
                 onDrop={(e) => handleDrop(e, "buttonsAlt")}
               >
                 <div className="section-content">
-                  {hoveredSection === "buttonsAlt" ? (
-                    <div className="section-id-reveal">
-                      <div className="section-id">
-                        ID: {sectionIds.buttonsAlt}
+                  {hoveredSection === "buttonsAlt" &&
+                    !placedComponents["buttonsAlt"]?.imagePath && (
+                      <div className="section-id-reveal">
+                        <div className="section-id">
+                          ID: {sectionIds.buttonsAlt}
+                        </div>
                       </div>
-                    </div>
-                  ) : (
-                    <div className="section-label">
-                      {placedComponents["buttonsAlt"]
-                        ? placedComponents["buttonsAlt"].label
-                        : ""}
+                    )}
+                  {placedComponents["buttonsAlt"]?.imagePath && (
+                    <div className="placed-component">
+                      <img
+                        src={placedComponents["buttonsAlt"].imagePath}
+                        className="component-image"
+                        style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }}
+                      />
                     </div>
                   )}
                 </div>
@@ -351,27 +438,37 @@ const WebsiteSections = ({ onComponentDrop }) => {
           </div>
         </div>
 
-        {/* Footer section */}
+        {/* Footer Section */}
         <div
           id={`section-footer`}
           className={`website-section footer-section ${
-            hoveredSection === "footer" ? "section-highlighted" : ""
+            hoveredSection === "footer" && !placedComponents["footer"]?.imagePath
+              ? "section-highlighted"
+              : ""
           }`}
-          onMouseEnter={() => setHoveredSection("footer")}
-          onMouseLeave={() => setHoveredSection(null)}
+          onMouseEnter={() =>
+            !placedComponents["footer"]?.imagePath && setHoveredSection("footer")
+          }
+          onMouseLeave={() =>
+            !placedComponents["footer"]?.imagePath && setHoveredSection(null)
+          }
           onDragOver={(e) => e.preventDefault()}
           onDrop={(e) => handleDrop(e, "footer")}
         >
           <div className="section-content">
-            {hoveredSection === "footer" ? (
-              <div className="section-id-reveal">
-                <div className="section-id">ID: {sectionIds.footer}</div>
-              </div>
-            ) : (
-              <div className="section-label">
-                {placedComponents["footer"]
-                  ? placedComponents["footer"].label
-                  : ""}
+            {hoveredSection === "footer" &&
+              !placedComponents["footer"]?.imagePath && (
+                <div className="section-id-reveal">
+                  <div className="section-id">ID: {sectionIds.footer}</div>
+                </div>
+              )}
+            {placedComponents["footer"]?.imagePath && (
+              <div className="placed-component">
+                <img
+                  src={placedComponents["footer"].imagePath}
+                  className="component-image"
+                  style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }}
+                />
               </div>
             )}
           </div>
@@ -379,10 +476,7 @@ const WebsiteSections = ({ onComponentDrop }) => {
       </div>
 
       {errorMessage && (
-        <ErrorPage
-          message={errorMessage}
-          onClose={() => setErrorMessage(null)}
-        />
+        <ErrorPage message={errorMessage} onClose={() => setErrorMessage(null)} />
       )}
     </div>
   );

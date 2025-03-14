@@ -2,7 +2,7 @@ export const componentData = [
     { id: 'button-6506', type: 'button', label: 'Outline Button', targetSection: 'buttons', icon: '🔘', variant: 'outline', imagePath: '/images/buttons/button-outline' },
     { id: 'footer-8008', type: 'footer', label: 'Multi-column Footer', targetSection: 'footer', icon: '🏷️', variant: 'multicolumn', imagePath: '/images/footers/footer-multicolumn' },
     { id: 'image-4505', type: 'image', label: 'Banner Image', targetSection: 'imageTop', icon: '🖼️', variant: 'banner', imagePath: '/images/images/image-banner' },
-    { id: 'login-2503', type: 'login', label: 'Dark Login', targetSection: 'login', icon: '🔐', variant: 'dark', imagePath: '/images/login/login-dark' },
+    { id: 'login-2503', type: 'login', label: 'Dark Login', targetSection: 'login', icon: '🔐', variant: 'dark', imagePath: '/images/navbars/navbar-green' },
     { id: 'contact-6006', type: 'contact', label: 'Bordered Contact Form', targetSection: 'contactForm', icon: '✉️', variant: 'bordered', imagePath: '/images/contact/contact-bordered' },
     { id: 'button-7007', type: 'button', label: 'Text Button', targetSection: 'buttonsAlt', icon: '🔘', variant: 'text', imagePath: '/images/buttons/button-text' },
     { id: 'content-4004', type: 'content', label: 'Dark Content Section', targetSection: 'content', icon: '📝', variant: 'dark', imagePath: '/images/content/content-dark' },
