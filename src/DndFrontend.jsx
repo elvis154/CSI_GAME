@@ -85,8 +85,11 @@ const GameContainer = () => {
           <div className="components-list">
             {components.map(comp => (
               <DraggableComponent
-                key={comp.id}
+                
+                original_id={comp.original_id || comp.id}
                 id={comp.id}
+                key={comp.id}
+                
                 type={comp.type}
                 label={comp.label}
                 icon={comp.icon}

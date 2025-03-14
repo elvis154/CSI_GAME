@@ -11,15 +11,15 @@ const WebsiteSections = ({ onComponentDrop }) => {
 
   // Fixed section IDs - these will be shown on hover
   const sectionIds = {
-    navbar: 20025,
-    login: 25030,
-    content: 40044,
+    navbar: 20031,
+    login: 25031,
+    content: 40041,
     imageTop: 45050,
-    imageLeft: 50054,
+    imageLeft: 50050,
     contactForm: 60061,
-    buttons: 65065,
+    buttons: 65062,
     buttonsAlt: 70070, // New ID for the second button
-    footer: 80083,
+    footer: 80082,
   };
 
   // Website sections
@@ -39,43 +39,52 @@ const WebsiteSections = ({ onComponentDrop }) => {
       const droppedComponentData = JSON.parse(
         e.dataTransfer.getData("component")
       );
-
-      // Extract the numeric ID without the color index
+  
+      // Extract the numeric ID
       const idParts = droppedComponentData.id.split("-");
-      const fullId = idParts[1];
-      // Remove the last digit which is the color index
-      const componentNumericId = Number(fullId.slice(0, -1));
-
+      const fullId = idParts[1] || droppedComponentData.id; // Handle if there's no dash
+      console.log("Full ID:", fullId);
+      
+      // Keep the full 5-digit ID
+      const componentNumericId = Number(fullId);
+      console.log("Component Numeric ID (5 digits):", componentNumericId);
+      
+      // Extract the base ID (first 4 digits) for matching with componentData
+      const baseComponentId = parseInt(fullId.slice(0, 4));
+      console.log("Base Component ID (4 digits):", baseComponentId);
+  
       // Check if the component is already placed
       if (placedComponents[sectionId]) {
         setErrorMessage(`Section '${sectionId}' already has a component.`);
         return;
       }
-
+  
       // Check if the dropped component matches the section ID
+      console.log("Component ID:", componentNumericId, "Section ID:", sectionIds[sectionId]);
       if (componentNumericId === sectionIds[sectionId]) {
-        // Find the matching component from componentData array to get the image path
+        // Find the matching component from componentData array using the base ID (4 digits)
         const matchingComponent = componentData.find((comp) => {
           const compIdParts = comp.id.split("-");
-          const compNumericId = Number(compIdParts[1]);
-          return compNumericId === componentNumericId;
+          const compNumericId = Number(compIdParts[1] || comp.id);
+          console.log("Matching:", compNumericId, baseComponentId);
+          return compNumericId === baseComponentId; // Compare with the 4-digit base ID
         });
-
+  
         if (matchingComponent) {
           // Create an enhanced component object with the image path
           const enhancedComponent = {
             ...droppedComponentData,
-            imagePath: matchingComponent.imagePath,
-            variant: matchingComponent.variant,
+            imagePath: matchingComponent.imagePath+parseInt(fullId.slice(4))+".png",
+            variant: parseInt(fullId.slice(4)) || 0, // Extract variant from the 5th digit
             targetSection: matchingComponent.targetSection,
           };
-
+  
           // Update state with the placed component
           setPlacedComponents((prev) => ({
             ...prev,
             [sectionId]: enhancedComponent,
           }));
-
+  
           // Call the parent callback with success
           onComponentDrop(enhancedComponent, sectionId, true);
         } else {

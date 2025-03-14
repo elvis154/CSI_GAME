@@ -628,12 +628,7 @@ body {
 }
 
 /* Color dropdown */
-.color-dropdown-container {
-  position: relative;
-  margin-left: 4px;
-  display: flex;
-  align-items: center;
-}
+
 
 .color-selection-display {
   display: flex;
@@ -684,11 +679,98 @@ body {
   border: 1px solid #ddd;
   border-radius: 4px;
   padding: 8px;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
+  flex-direction: column;
   gap: 6px;
   z-index: 100;
   box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  min-width: 200px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.color-dropdown-container {
+  position: relative;
+  margin-left: 4px;
+  display: flex;
+  align-items: center;
+}
+
+.draggable-component {
+  cursor: default;
+  padding: 8px;
+  border-radius: 4px;
+  background-color: white;
+  margin-bottom: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+}
+
+.sub-component {
+  padding: 6px;
+  margin-bottom: 4px;
+  cursor: grab;
+  background-color: #f9f9f9;
+  border-radius: 3px;
+  font-size: 0.9em;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.2s;
+}
+
+.sub-component:hover {
+  background-color: #f0f0f0;
+}
+
+.sub-component .component-icon {
+  font-size: 0.9em;
+  margin-right: 6px;
+}
+
+.sub-component .component-label {
+  font-size: 0.9em;
+  flex-grow: 1;
+}
+
+.sub-component .component-id {
+  font-size: 0.8em;
+  opacity: 0.7;
+}
+
+.component-icon {
+  margin-right: 8px;
+  font-size: 1.2em;
+}
+
+.component-label {
+  flex-grow: 1;
+}
+
+.component-id {
+  font-size: 0.8em;
+  color: #666;
+  margin-top: 2px;
+}
+
+.dropdown-arrow-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 2px 5px;
+  border-radius: 3px;
+}
+
+.dropdown-arrow-button:hover {
+  background-color: #f0f0f0;
+}
+
+.dropdown-arrow {
+  font-size: 0.8em;
+}
+
+.dragging {
+  opacity: 0.7;
 }
 
 /* Game Effect Classes */

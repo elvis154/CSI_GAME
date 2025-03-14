@@ -1,39 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './dnd.css';
 
-const DraggableComponent = ({ id, type, label, icon, colorOptions = [] }) => {
-  // If no color options are provided, generate some default colors
-  const defaultColors = colorOptions.length > 0 ? colorOptions : [
-    '#000000', // Black (0)
-    '#4285F4', // Blue (1)
-    '#EA4335', // Red (2)
-    '#FBBC05', // Yellow (3)
-    '#34A853', // Green (4)
-    '#9C27B0', // Purple (5)
-    '#FF9800', // Orange (6)
-    '#795548'  // Brown (7)
-  ];
-
-  const [selectedColor, setSelectedColor] = useState(defaultColors[0]);
-  const [isColorMenuOpen, setIsColorMenuOpen] = useState(false);
+const DraggableComponent = ({ original_id, id, type, label, icon, subComponents = [] }) => {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
-  
-  // Generate unique color IDs for each color option (0-7 for 8 colors)
-  const colorOptionsWithIds = defaultColors.map((color, index) => ({
-    id: index,
-    color
-  }));
-  
-  // Find current color index
-  const getCurrentColorIndex = () => {
-    return colorOptionsWithIds.findIndex(option => option.color === selectedColor);
-  };
   
   // Handle click outside to close dropdown
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setIsColorMenuOpen(false);
+        setIsDropdownOpen(false);
       }
     };
     
@@ -43,23 +19,24 @@ const DraggableComponent = ({ id, type, label, icon, colorOptions = [] }) => {
     };
   }, []);
   
-  // Handle drag start
-  const handleDragStart = (e) => {
-    // Get current color index (0-7)
-    const colorIndex = getCurrentColorIndex();
+  // Toggle dropdown menu
+  const toggleDropdown = (e) => {
+    e.stopPropagation();
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+  
+  // Handle drag start for subcomponents
+  const handleSubComponentDragStart = (subComponent, index, e) => {
+    // Append index to id to create a 5-digit ID (e.g., 1001 becomes 10010, 10011, etc.)
+    const idWithIndex = `${id}${index}`;
     
-    // Append color index to component id (e.g., 1001 becomes 10011 for blue)
-    const idWithColor = `${id}${colorIndex}`;
-    
-    // Set the drag data with component info including modified ID and selected color
+    // Set the drag data with subcomponent info
     const componentData = {
-      id: idWithColor, // Modified ID with color index appended
+      id: idWithIndex, // Modified ID with color index appended
       originalId: id, // Keep original ID for reference
       type,
       label,
       icon,
-      color: selectedColor,
-      colorIndex: colorIndex
     };
     
     e.dataTransfer.setData('component', JSON.stringify(componentData));
@@ -73,27 +50,17 @@ const DraggableComponent = ({ id, type, label, icon, colorOptions = [] }) => {
     e.target.classList.remove('dragging');
   };
   
-  // Toggle color menu
-  const toggleColorMenu = (e) => {
-    e.stopPropagation();
-    setIsColorMenuOpen(!isColorMenuOpen);
-  };
-  
-  // Select color
-  const selectColor = (color, e) => {
-    e.stopPropagation();
-    setSelectedColor(color);
-    setIsColorMenuOpen(false);
-  };
+  // Generate subcomponents if none provided
+  const generatedSubComponents = subComponents.length > 0 ? subComponents : [
+    { type: {original_id}, label: `${label} - Variant 1` },
+    { type: {original_id}, label: `${label} - Variant 2` },
+    { type: {original_id}, label: `${label} - Variant 3` }
+  ];
   
   return (
     <div 
-      className={`draggable-component ${type} color-${selectedColor.replace('#', '')}`}
-      draggable="true"
-      onDragStart={handleDragStart}
-      onDragEnd={handleDragEnd}
+      className={`draggable-component ${type}`}
       data-component-id={id}
-      style={{ borderLeft: `4px solid ${selectedColor}` }}
     >
       <div className="component-icon">{icon}</div>
       <div className="component-label">
@@ -103,39 +70,55 @@ const DraggableComponent = ({ id, type, label, icon, colorOptions = [] }) => {
       
       <div className="color-dropdown-container" ref={dropdownRef}>
         <div className="color-selection-display">
-          <div 
-            className="selected-color-indicator" 
-            style={{ backgroundColor: selectedColor }}
-            title={selectedColor}
-          ></div>
-          
           <button 
             className="dropdown-arrow-button" 
-            onClick={toggleColorMenu}
-            aria-label="Select color"
-            aria-expanded={isColorMenuOpen}
+            onClick={toggleDropdown}
+            aria-label="Show subcomponents"
+            aria-expanded={isDropdownOpen}
           >
-            <span className="dropdown-arrow">{isColorMenuOpen ? '▲' : '▼'}</span>
+            <span className="dropdown-arrow">{isDropdownOpen ? '▲' : '▼'}</span>
           </button>
         </div>
         
-        {isColorMenuOpen && (
+        {isDropdownOpen && (
           <div className="color-dropdown">
-            {colorOptionsWithIds.map(({ id: colorId, color }) => (
+            {generatedSubComponents.map((subComp, index) => (
               <div 
-                key={colorId}
-                className={`color-option ${color === selectedColor ? 'selected' : ''}`}
-                style={{ backgroundColor: color }}
-                onClick={(e) => selectColor(color, e)}
-                data-color-id={colorId}
-                title={`${color} (${colorId})`}
-              ></div>
+                key={index}
+                className="draggable-component sub-component"
+                draggable="true"
+                onDragStart={(e) => handleSubComponentDragStart(subComp, index, e)}
+                onDragEnd={handleDragEnd}
+                style={{ borderLeft: `4px solid ${getColorForIndex(index)}` }}
+              >
+                <div className="component-icon">{subComp.icon || icon}</div>
+                <div className="component-label">
+                  {subComp.label}
+                  <div className="component-id">ID: {id}{index}</div>
+                </div>
+              </div>
             ))}
           </div>
         )}
       </div>
     </div>
   );
+};
+
+// Helper function to get color based on index
+const getColorForIndex = (index) => {
+  const colors = [
+    '#000000', // Black (0)
+    '#4285F4', // Blue (1)
+    '#EA4335', // Red (2)
+    '#FBBC05', // Yellow (3)
+    '#34A853', // Green (4)
+    '#9C27B0', // Purple (5)
+    '#FF9800', // Orange (6)
+    '#795548'  // Brown (7)
+  ];
+  
+  return colors[index % colors.length];
 };
 
 export default DraggableComponent;
