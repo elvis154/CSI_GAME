@@ -33,6 +33,9 @@ const WebsiteSections = ({ onComponentDrop }) => {
   const [placedComponents, setPlacedComponents] = useState({});
 
   const handleDrop = (e, sectionId) => {
+    const hell=sectionId;
+    const hell1 = sectionId.split("-")[0];
+    sectionId = hell1;
     e.preventDefault();
     try {
       // Get the component data from the drop event
@@ -69,8 +72,10 @@ const WebsiteSections = ({ onComponentDrop }) => {
           console.log("Matching:", compNumericId, baseComponentId);
           return compNumericId === baseComponentId; // Compare with the 4-digit base ID
         });
+        sectionId=hell;
         if (matchingComponent) {
           // Create an enhanced component object with the image path
+          console.log("Matching component:");
           const enhancedComponent = {
             ...droppedComponentData,
             imagePath: matchingComponent.imagePath+parseInt(fullId.slice(4))+".png",
@@ -79,12 +84,14 @@ const WebsiteSections = ({ onComponentDrop }) => {
           };
   
           // Update state with the placed component
+          sectionId=hell1;
           setPlacedComponents((prev) => ({
             ...prev,
             [sectionId]: enhancedComponent,
           }));
   
           // Call the parent callback with success
+          sectionId=hell;
           onComponentDrop(enhancedComponent, sectionId, true);
         } else {
           console.error("Could not find matching component in componentData");
@@ -137,7 +144,7 @@ const WebsiteSections = ({ onComponentDrop }) => {
                     !placedComponents["navbar"]?.imagePath && setHoveredSection(null)
                     }
                     onDragOver={(e) => e.preventDefault()}
-                    onDrop={(e) => handleDrop(e, "navbar")}
+                    onDrop={(e) => handleDrop(e, "navbar-"+sectionIds.navbar)}
                     >
                     <div className="section-content">
                     {hoveredSection === "navbar" &&
@@ -174,7 +181,7 @@ const WebsiteSections = ({ onComponentDrop }) => {
               !placedComponents["login"]?.imagePath && setHoveredSection(null)
             }
             onDragOver={(e) => e.preventDefault()}
-            onDrop={(e) => handleDrop(e, "login")}
+            onDrop={(e) => handleDrop(e, "login-"+sectionIds.login)}
           >
             <div className="section-content">
               {hoveredSection === "login" &&
@@ -215,7 +222,7 @@ const WebsiteSections = ({ onComponentDrop }) => {
                 !placedComponents["content"]?.imagePath && setHoveredSection(null)
               }
               onDragOver={(e) => e.preventDefault()}
-              onDrop={(e) => handleDrop(e, "content")}
+              onDrop={(e) => handleDrop(e, "content-"+sectionIds.content)}
             >
               <div className="section-content">
                 {hoveredSection === "content" &&
@@ -254,7 +261,7 @@ const WebsiteSections = ({ onComponentDrop }) => {
                 setHoveredSection(null)
               }
               onDragOver={(e) => e.preventDefault()}
-              onDrop={(e) => handleDrop(e, "imageLeft")}
+              onDrop={(e) => handleDrop(e, "imageLeft-"+sectionIds.imageLeft)}
             >
               <div className="section-content">
                 {hoveredSection === "imageLeft" &&
@@ -294,7 +301,7 @@ const WebsiteSections = ({ onComponentDrop }) => {
                 !placedComponents["imageTop"]?.imagePath && setHoveredSection(null)
               }
               onDragOver={(e) => e.preventDefault()}
-              onDrop={(e) => handleDrop(e, "imageTop")}
+              onDrop={(e) => handleDrop(e, "imageTop-"+sectionIds.imageTop)}
             >
               <div className="section-content">
                 {hoveredSection === "imageTop" &&
@@ -333,7 +340,7 @@ const WebsiteSections = ({ onComponentDrop }) => {
                 setHoveredSection(null)
               }
               onDragOver={(e) => e.preventDefault()}
-              onDrop={(e) => handleDrop(e, "contactForm")}
+              onDrop={(e) => handleDrop(e, "contactForm-"+sectionIds.contactForm)}
             >
               <div className="section-content">
                 {hoveredSection === "contactForm" &&
@@ -373,7 +380,7 @@ const WebsiteSections = ({ onComponentDrop }) => {
                   setHoveredSection(null)
                 }
                 onDragOver={(e) => e.preventDefault()}
-                onDrop={(e) => handleDrop(e, "buttons")}
+                onDrop={(e) => handleDrop(e, "buttons-"+sectionIds.buttons)}
               >
                 <div className="section-content">
                   {hoveredSection === "buttons" &&
@@ -412,7 +419,7 @@ const WebsiteSections = ({ onComponentDrop }) => {
                   setHoveredSection(null)
                 }
                 onDragOver={(e) => e.preventDefault()}
-                onDrop={(e) => handleDrop(e, "buttonsAlt")}
+                onDrop={(e) => handleDrop(e, "buttonsAlt-"+sectionIds.buttonsAlt)}
               >
                 <div className="section-content">
                   {hoveredSection === "buttonsAlt" &&
@@ -453,7 +460,7 @@ const WebsiteSections = ({ onComponentDrop }) => {
             !placedComponents["footer"]?.imagePath && setHoveredSection(null)
           }
           onDragOver={(e) => e.preventDefault()}
-          onDrop={(e) => handleDrop(e, "footer")}
+          onDrop={(e) => handleDrop(e, "footer-"+sectionIds.footer)}
         >
           <div className="section-content">
             {hoveredSection === "footer" &&

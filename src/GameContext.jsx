@@ -43,8 +43,8 @@ export const GameProvider = ({ children }) => {
   // Check if component placement is correct (based on ID pattern)
   const checkPlacement = (componentId, sectionId) => {
     console.log("checkPlacement", componentId, sectionId, level)
-    const lastChar = componentId.slice(-1);
-    return (componentId.startsWith(`${sectionId}-`) && lastChar === level.toString());
+    
+    return (componentId===sectionId);
   };
   
   // Handle component drop
