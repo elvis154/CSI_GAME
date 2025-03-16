@@ -17,7 +17,7 @@ root.render(
         <Route path="/error" element={<ErrorPage />} /> 
         <Route path="/Win" element={<Win95Terminal/>} />
         <Route path="/matrix" element={<Windows95Matrix/>} />
-        <Route path="/compare" element={<GraphComparison/>} />
+        <Route path="/deployment" element={<GraphComparison/>} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

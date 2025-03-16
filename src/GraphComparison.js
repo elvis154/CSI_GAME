@@ -37,16 +37,17 @@ const GraphComparison = () => {
     { type: "Monitoring", x: 650, y: 185 },
   ];
 
-  // Timer: Decrease timeLeft and score every second
-  useEffect(() => {
-    if (timeLeft > 0) {
-      const timerId = setInterval(() => {
-        setTimeLeft((prev) => prev - 1);
-        setScore((prev) => (prev > 0 ? prev - 2 : 0));
-      }, 1000);
-      return () => clearInterval(timerId);
-    }
-  }, [timeLeft]);
+ // Timer: Decrease timeLeft and score every second
+useEffect(() => {
+  if (timeLeft > 0 && isCorrectGraph !== true) {
+    const timerId = setInterval(() => {
+      setTimeLeft((prev) => prev - 1);
+      setScore((prev) => (prev > 0 ? prev - 2 : 0));
+    }, 1000);
+    return () => clearInterval(timerId);
+  }
+}, [timeLeft, isCorrectGraph]);
+
 
   useEffect(() => {
     checkGraph();
