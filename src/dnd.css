@@ -624,6 +624,7 @@ body {
 
 .component-id {
   font-size: 10px;
+  font-weight: bold;
   color: #666;
   margin-top: 2px;
 }
@@ -783,6 +784,70 @@ body {
   pointer-events: none;
   opacity: 0.7;
   filter: grayscale(50%);
+}
+
+.win95-success-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3000;
+}
+
+.win95-success-dialog {
+  width: 400px;
+  background-color: var(--win95-gray);
+  border: 2px outset var(--win95-gray-light);
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+  animation: appear 0.3s ease-out;
+}
+
+.win95-success-icon {
+  width: 48px;
+  height: 48px;
+  background-color: green;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-weight: bold;
+  font-size: 32px;
+  margin-bottom: 16px;
+}
+
+.win95-success-message {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.win95-success-message h2 {
+  font-size: 18px;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.win95-score-display {
+  font-size: 16px;
+  font-weight: bold;
+  margin-top: 16px;
+  color: var(--win95-blue);
+}
+
+@keyframes appear {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 /* Animations */

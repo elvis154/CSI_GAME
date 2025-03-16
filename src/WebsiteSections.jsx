@@ -11,15 +11,15 @@ const WebsiteSections = ({ onComponentDrop }) => {
 
   // Fixed section IDs - these will be shown on hover
   const sectionIds = {
-    navbar: 20021,                                          //[2002, 2003, 2004],
-    login:  25042,                                         //[2503, 2504, 2505],
-    content: 40060,                                          //[4004, 4005, 4006],
-    imageTop: 45050,                                          //[4505, 4506, 4507],
-    imageLeft: 50061,                                         // [5004, 5005, 5006],
-    contactForm: 60072,                                          //[6006, 6007, 6008],
-    buttons: 65081,                                          //[6508, 6507, 6506],
-    buttonsAlt: 70072,                                         // [7007, 7008, 7009],
-    footer: 80082,                                         // [8008, 8009, 8010],
+    navbar: 20021, //[2002, 2003, 2004],
+    login: 25042, //[2503, 2504, 2505],
+    content: 40060, //[4004, 4005, 4006],
+    imageTop: 45050, //[4505, 4506, 4507],
+    imageLeft: 50061, // [5004, 5005, 5006],
+    contactForm: 60072, //[6006, 6007, 6008],
+    buttons: 65081, //[6508, 6507, 6506],
+    buttonsAlt: 70072, // [7007, 7008, 7009],
+    footer: 80082, // [8008, 8009, 8010],
   };
 
   // Website sections
@@ -32,67 +32,84 @@ const WebsiteSections = ({ onComponentDrop }) => {
   // Handle component drop
   const [placedComponents, setPlacedComponents] = useState({});
 
+  // This is a partial fix for the handleDrop function in WebsiteSections.jsx
+  // Replace only this function in your WebsiteSections component
+
   const handleDrop = (e, sectionId) => {
-    const hell=sectionId;
-    const hell1 = sectionId.split("-")[0];
-    sectionId = hell1;
     e.preventDefault();
     try {
+      // Store the original sectionId for later use
+      const originalSectionId = sectionId;
+
+      // Extract the base section name (e.g., "navbar", "footer")
+      const baseSectionId = sectionId.split("-")[0];
+
       // Get the component data from the drop event
       const droppedComponentData = JSON.parse(
         e.dataTransfer.getData("component")
       );
-  
+
       // Extract the numeric ID
       const idParts = droppedComponentData.id.split("-");
       const fullId = idParts[1] || droppedComponentData.id; // Handle if there's no dash
       console.log("Full ID:", fullId);
-      
+
       // Keep the full 5-digit ID
       const componentNumericId = Number(fullId);
       console.log("Component Numeric ID (5 digits):", componentNumericId);
-      
+
       // Extract the base ID (first 4 digits) for matching with componentData
       const baseComponentId = parseInt(fullId.slice(0, 4));
       console.log("Base Component ID (4 digits):", baseComponentId);
-  
+
       // Check if the component is already placed
-      if (placedComponents[sectionId]) {
-        setErrorMessage(`Section '${sectionId}' already has a component.`);
+      if (placedComponents[baseSectionId]) {
+        setErrorMessage(`Section '${baseSectionId}' already has a component.`);
         return;
       }
-  
+
+      // Get the expected numeric ID for this section
+      const expectedSectionId = sectionIds[baseSectionId];
+      console.log(
+        "Expected Section ID:",
+        expectedSectionId,
+        "Component ID:",
+        componentNumericId
+      );
+
       // Check if the dropped component matches the section ID
-      console.log("Component ID:", componentNumericId, "Section ID:", sectionIds[sectionId]);
-      if (componentNumericId === sectionIds[sectionId]) {
-        // Find the matching component from componentData array using the base ID (4 digits)
+      if (
+        componentNumericId === expectedSectionId || // Exact match
+        String(componentNumericId).startsWith(String(expectedSectionId)) || // Prefix match
+        String(expectedSectionId).startsWith(String(componentNumericId))
+      ) {
+        // Find the matching component from componentData array using the base ID
         const matchingComponent = componentData.find((comp) => {
           const compIdParts = comp.id.split("-");
           const compNumericId = Number(compIdParts[1] || comp.id);
           console.log("Matching:", compNumericId, baseComponentId);
-          return compNumericId === baseComponentId; // Compare with the 4-digit base ID
+          return compNumericId === baseComponentId;
         });
-        sectionId=hell;
+
         if (matchingComponent) {
           // Create an enhanced component object with the image path
-          console.log("Matching component:");
+          console.log("Matching component found!");
           const enhancedComponent = {
             ...droppedComponentData,
-            imagePath: matchingComponent.imagePath+parseInt(fullId.slice(4))+".png",
-            variant: parseInt(fullId.slice(4)) || 0, // Extract variant from the 5th digit
+            imagePath:
+              matchingComponent.imagePath + parseInt(fullId.slice(4)) + ".png",
+            variant: parseInt(fullId.slice(4)) || 0,
             targetSection: matchingComponent.targetSection,
           };
-  
+
           // Update state with the placed component
-          sectionId=hell1;
           setPlacedComponents((prev) => ({
             ...prev,
-            [sectionId]: enhancedComponent,
+            [baseSectionId]: enhancedComponent,
           }));
-  
-          // Call the parent callback with success
-          sectionId=hell;
-          onComponentDrop(enhancedComponent, sectionId, true);
+
+          // Call the parent callback with success - use the original sectionId for the callback
+          onComponentDrop(enhancedComponent, originalSectionId, true);
         } else {
           console.error("Could not find matching component in componentData");
           setErrorMessage(
@@ -103,14 +120,16 @@ const WebsiteSections = ({ onComponentDrop }) => {
         // Handle incorrect placement
         console.log("Incorrect placement!");
         setErrorMessage(
-          `Incorrect placement! Component ID ${componentNumericId} doesn't match section ID ${sectionIds[sectionId]}.`
+          `Incorrect placement! Component ID ${componentNumericId} doesn't match section ID ${expectedSectionId}.`
         );
         freezeScreen(true);
         setTimeout(() => {
           freezeScreen(false);
           setErrorMessage(null);
         }, (Math.random() * 3 + 3) * 1000);
-        onComponentDrop(droppedComponentData, sectionId, false);
+
+        // Report the incorrect placement to the parent
+        onComponentDrop(droppedComponentData, originalSectionId, false);
       }
     } catch (error) {
       console.error("Error handling drop:", error);
@@ -130,58 +149,74 @@ const WebsiteSections = ({ onComponentDrop }) => {
         {/* Top sections: Navbar and Login */}
         <div className="website-top">
           {/* Navbar Section */}
-                    <div
-                    id={`section-navbar`}
-                    className={`website-section navbar-section ${
-                    hoveredSection === "navbar" && !placedComponents["navbar"]?.imagePath
-                    ? "section-highlighted"
-                    : ""
-                    }`}
-                    onMouseEnter={() =>
-                    !placedComponents["navbar"]?.imagePath && setHoveredSection("navbar")
-                    }
-                    onMouseLeave={() =>
-                    !placedComponents["navbar"]?.imagePath && setHoveredSection(null)
-                    }
-                    onDragOver={(e) => e.preventDefault()}
-                    onDrop={(e) => handleDrop(e, "navbar-"+sectionIds.navbar)}
-                    >
-                    <div className="section-content">
-                    {hoveredSection === "navbar" &&
-                    !placedComponents["navbar"]?.imagePath && (
-                    <div className="section-id-reveal">
-                    <div className="section-id">ID: {sectionIds.navbar}</div>
-                    </div>
-                    )}
-                    {placedComponents["navbar"]?.imagePath && (
-                    <div className="placed-component" style={{ width: '100%', height: '100%', position: 'relative' }}>
-                    <img
-                        src={placedComponents["navbar"].imagePath}
-                        className="component-image"
-                        style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }}
-                    />
-                </div>
-                
-                    )}
-                    </div>
-                    </div>
-
-                    {/* Login Section */}
           <div
-            id={`section-login`}
-            className={`website-section login-section ${
-              hoveredSection === "login" && !placedComponents["login"]?.imagePath
+            id={`section-navbar`}
+            className={`website-section navbar-section ${
+              hoveredSection === "navbar" &&
+              !placedComponents["navbar"]?.imagePath
                 ? "section-highlighted"
                 : ""
             }`}
             onMouseEnter={() =>
-              !placedComponents["login"]?.imagePath && setHoveredSection("login")
+              !placedComponents["navbar"]?.imagePath &&
+              setHoveredSection("navbar")
+            }
+            onMouseLeave={() =>
+              !placedComponents["navbar"]?.imagePath && setHoveredSection(null)
+            }
+            onDragOver={(e) => e.preventDefault()}
+            onDrop={(e) => handleDrop(e, "navbar-" + sectionIds.navbar)}
+          >
+            <div className="section-content">
+              {hoveredSection === "navbar" &&
+                !placedComponents["navbar"]?.imagePath && (
+                  <div className="section-id-reveal">
+                    <div className="section-id">ID: {sectionIds.navbar}</div>
+                  </div>
+                )}
+              {placedComponents["navbar"]?.imagePath && (
+                <div
+                  className="placed-component"
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    position: "relative",
+                  }}
+                >
+                  <img
+                    src={placedComponents["navbar"].imagePath}
+                    className="component-image"
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                    }}
+                  />
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Login Section */}
+          <div
+            id={`section-login`}
+            className={`website-section login-section ${
+              hoveredSection === "login" &&
+              !placedComponents["login"]?.imagePath
+                ? "section-highlighted"
+                : ""
+            }`}
+            onMouseEnter={() =>
+              !placedComponents["login"]?.imagePath &&
+              setHoveredSection("login")
             }
             onMouseLeave={() =>
               !placedComponents["login"]?.imagePath && setHoveredSection(null)
             }
             onDragOver={(e) => e.preventDefault()}
-            onDrop={(e) => handleDrop(e, "login-"+sectionIds.login)}
+            onDrop={(e) => handleDrop(e, "login-" + sectionIds.login)}
           >
             <div className="section-content">
               {hoveredSection === "login" &&
@@ -195,7 +230,13 @@ const WebsiteSections = ({ onComponentDrop }) => {
                   <img
                     src={placedComponents["login"].imagePath}
                     className="component-image"
-                    style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                    }}
                   />
                 </div>
               )}
@@ -210,7 +251,8 @@ const WebsiteSections = ({ onComponentDrop }) => {
             <div
               id={`section-content`}
               className={`website-section content-section ${
-                hoveredSection === "content" && !placedComponents["content"]?.imagePath
+                hoveredSection === "content" &&
+                !placedComponents["content"]?.imagePath
                   ? "section-highlighted"
                   : ""
               }`}
@@ -219,10 +261,11 @@ const WebsiteSections = ({ onComponentDrop }) => {
                 setHoveredSection("content")
               }
               onMouseLeave={() =>
-                !placedComponents["content"]?.imagePath && setHoveredSection(null)
+                !placedComponents["content"]?.imagePath &&
+                setHoveredSection(null)
               }
               onDragOver={(e) => e.preventDefault()}
-              onDrop={(e) => handleDrop(e, "content-"+sectionIds.content)}
+              onDrop={(e) => handleDrop(e, "content-" + sectionIds.content)}
             >
               <div className="section-content">
                 {hoveredSection === "content" &&
@@ -236,7 +279,13 @@ const WebsiteSections = ({ onComponentDrop }) => {
                     <img
                       src={placedComponents["content"].imagePath}
                       className="component-image"
-                      style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }}
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        position: "absolute",
+                        top: 0,
+                        left: 0,
+                      }}
                     />
                   </div>
                 )}
@@ -261,13 +310,15 @@ const WebsiteSections = ({ onComponentDrop }) => {
                 setHoveredSection(null)
               }
               onDragOver={(e) => e.preventDefault()}
-              onDrop={(e) => handleDrop(e, "imageLeft-"+sectionIds.imageLeft)}
+              onDrop={(e) => handleDrop(e, "imageLeft-" + sectionIds.imageLeft)}
             >
               <div className="section-content">
                 {hoveredSection === "imageLeft" &&
                   !placedComponents["imageLeft"]?.imagePath && (
                     <div className="section-id-reveal">
-                      <div className="section-id">ID: {sectionIds.imageLeft}</div>
+                      <div className="section-id">
+                        ID: {sectionIds.imageLeft}
+                      </div>
                     </div>
                   )}
                 {placedComponents["imageLeft"]?.imagePath && (
@@ -275,7 +326,13 @@ const WebsiteSections = ({ onComponentDrop }) => {
                     <img
                       src={placedComponents["imageLeft"].imagePath}
                       className="component-image"
-                      style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }}
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        position: "absolute",
+                        top: 0,
+                        left: 0,
+                      }}
                     />
                   </div>
                 )}
@@ -298,16 +355,19 @@ const WebsiteSections = ({ onComponentDrop }) => {
                 setHoveredSection("imageTop")
               }
               onMouseLeave={() =>
-                !placedComponents["imageTop"]?.imagePath && setHoveredSection(null)
+                !placedComponents["imageTop"]?.imagePath &&
+                setHoveredSection(null)
               }
               onDragOver={(e) => e.preventDefault()}
-              onDrop={(e) => handleDrop(e, "imageTop-"+sectionIds.imageTop)}
+              onDrop={(e) => handleDrop(e, "imageTop-" + sectionIds.imageTop)}
             >
               <div className="section-content">
                 {hoveredSection === "imageTop" &&
                   !placedComponents["imageTop"]?.imagePath && (
                     <div className="section-id-reveal">
-                      <div className="section-id">ID: {sectionIds.imageTop}</div>
+                      <div className="section-id">
+                        ID: {sectionIds.imageTop}
+                      </div>
                     </div>
                   )}
                 {placedComponents["imageTop"]?.imagePath && (
@@ -315,7 +375,13 @@ const WebsiteSections = ({ onComponentDrop }) => {
                     <img
                       src={placedComponents["imageTop"].imagePath}
                       className="component-image"
-                      style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }}
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        position: "absolute",
+                        top: 0,
+                        left: 0,
+                      }}
                     />
                   </div>
                 )}
@@ -340,13 +406,17 @@ const WebsiteSections = ({ onComponentDrop }) => {
                 setHoveredSection(null)
               }
               onDragOver={(e) => e.preventDefault()}
-              onDrop={(e) => handleDrop(e, "contactForm-"+sectionIds.contactForm)}
+              onDrop={(e) =>
+                handleDrop(e, "contactForm-" + sectionIds.contactForm)
+              }
             >
               <div className="section-content">
                 {hoveredSection === "contactForm" &&
                   !placedComponents["contactForm"]?.imagePath && (
                     <div className="section-id-reveal">
-                      <div className="section-id">ID: {sectionIds.contactForm}</div>
+                      <div className="section-id">
+                        ID: {sectionIds.contactForm}
+                      </div>
                     </div>
                   )}
                 {placedComponents["contactForm"]?.imagePath && (
@@ -354,7 +424,13 @@ const WebsiteSections = ({ onComponentDrop }) => {
                     <img
                       src={placedComponents["contactForm"].imagePath}
                       className="component-image"
-                      style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }}
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        position: "absolute",
+                        top: 0,
+                        left: 0,
+                      }}
                     />
                   </div>
                 )}
@@ -380,13 +456,15 @@ const WebsiteSections = ({ onComponentDrop }) => {
                   setHoveredSection(null)
                 }
                 onDragOver={(e) => e.preventDefault()}
-                onDrop={(e) => handleDrop(e, "buttons-"+sectionIds.buttons)}
+                onDrop={(e) => handleDrop(e, "buttons-" + sectionIds.buttons)}
               >
                 <div className="section-content">
                   {hoveredSection === "buttons" &&
                     !placedComponents["buttons"]?.imagePath && (
                       <div className="section-id-reveal">
-                        <div className="section-id">ID: {sectionIds.buttons}</div>
+                        <div className="section-id">
+                          ID: {sectionIds.buttons}
+                        </div>
                       </div>
                     )}
                   {placedComponents["buttons"]?.imagePath && (
@@ -394,7 +472,13 @@ const WebsiteSections = ({ onComponentDrop }) => {
                       <img
                         src={placedComponents["buttons"].imagePath}
                         className="component-image"
-                        style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }}
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          position: "absolute",
+                          top: 0,
+                          left: 0,
+                        }}
                       />
                     </div>
                   )}
@@ -419,7 +503,9 @@ const WebsiteSections = ({ onComponentDrop }) => {
                   setHoveredSection(null)
                 }
                 onDragOver={(e) => e.preventDefault()}
-                onDrop={(e) => handleDrop(e, "buttonsAlt-"+sectionIds.buttonsAlt)}
+                onDrop={(e) =>
+                  handleDrop(e, "buttonsAlt-" + sectionIds.buttonsAlt)
+                }
               >
                 <div className="section-content">
                   {hoveredSection === "buttonsAlt" &&
@@ -435,7 +521,13 @@ const WebsiteSections = ({ onComponentDrop }) => {
                       <img
                         src={placedComponents["buttonsAlt"].imagePath}
                         className="component-image"
-                        style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }}
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          position: "absolute",
+                          top: 0,
+                          left: 0,
+                        }}
                       />
                     </div>
                   )}
@@ -449,18 +541,20 @@ const WebsiteSections = ({ onComponentDrop }) => {
         <div
           id={`section-footer`}
           className={`website-section footer-section ${
-            hoveredSection === "footer" && !placedComponents["footer"]?.imagePath
+            hoveredSection === "footer" &&
+            !placedComponents["footer"]?.imagePath
               ? "section-highlighted"
               : ""
           }`}
           onMouseEnter={() =>
-            !placedComponents["footer"]?.imagePath && setHoveredSection("footer")
+            !placedComponents["footer"]?.imagePath &&
+            setHoveredSection("footer")
           }
           onMouseLeave={() =>
             !placedComponents["footer"]?.imagePath && setHoveredSection(null)
           }
           onDragOver={(e) => e.preventDefault()}
-          onDrop={(e) => handleDrop(e, "footer-"+sectionIds.footer)}
+          onDrop={(e) => handleDrop(e, "footer-" + sectionIds.footer)}
         >
           <div className="section-content">
             {hoveredSection === "footer" &&
@@ -474,7 +568,13 @@ const WebsiteSections = ({ onComponentDrop }) => {
                 <img
                   src={placedComponents["footer"].imagePath}
                   className="component-image"
-                  style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                  }}
                 />
               </div>
             )}
@@ -483,7 +583,10 @@ const WebsiteSections = ({ onComponentDrop }) => {
       </div>
 
       {errorMessage && (
-        <ErrorPage message={errorMessage} onClose={() => setErrorMessage(null)} />
+        <ErrorPage
+          message={errorMessage}
+          onClose={() => setErrorMessage(null)}
+        />
       )}
     </div>
   );
