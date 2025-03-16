@@ -1,9 +1,11 @@
+/* Global reset */
 html, body {
   height: 100%;
   width: 100%;
   margin: 0;
   padding: 0;
   overflow: hidden; /* Prevent scrolling */
+  font-family: 'Press Start 2P', cursive, sans-serif; /* Pixel font for a retro feel */
   background: url('bg_image.webp') no-repeat center center fixed;
   background-size: 100% 100%; /* Stretch to fully fit */
 }
@@ -12,18 +14,41 @@ html, body {
 .graph-container {
   display: grid;
   grid-template-columns: 3fr 1fr;
-  grid-template-rows: auto auto;
+  /* Increase rows to accommodate a new bottom "taskbar" row */
+  grid-template-rows: 1fr 1fr auto 40px; /* added row 4 for the taskbar */
   gap: 10px;
   width: 1000px; /* Increased width */
-  height: 600px; /* Increased height */
+  height: 640px; /* Increased height to allow space for the new bottom bar */
   padding: 15px;
   background: rgba(192, 192, 192, 0.95);
   border: 3px solid black;
-  font-family: "MS Sans Serif", sans-serif;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+/* Graph validation message (placed at the bottom inside the graph container) */
+.graph-validation {
+  /* Originally absolute at bottom; we'll hide it so we can show the new taskbar version */
+  display: none; /* <--- Hide old validation display, keep code in DOM */
+  grid-column: 1 / span 2;
+  text-align: center;
+  font-size: 10px; /* Reduced font size */
+  margin-top: 10px;
+  position: absolute;
+  bottom: 5px; /* Positioning status closer to the bottom edge */
+  width: 100%;
+}
+
+.correct-graph {
+  color: green;
+  font-weight: bold;
+}
+
+.incorrect-graph {
+  color: red;
+  font-weight: bold;
 }
 
 /* Playground styling */
@@ -32,7 +57,7 @@ html, body {
   grid-column: 1;
   grid-row: 1;
   background: #dcdcdc;
-  border: 2px dashed green;
+  border: 2px dashed black;
   padding: 10px;
   min-height: 300px; /* Increased height */
   overflow: auto; /* Allow scrolling if components exceed space */
@@ -47,6 +72,7 @@ html, body {
   color: white;
   padding: 2px 5px;
   font-weight: bold;
+  font-size: 10px; /* Reduced font size */
 }
 
 /* Reference Graph */
@@ -77,37 +103,36 @@ html, body {
   color: white;
   padding: 5px;
   font-weight: bold;
-}
-
-/* Graph Validation Message */
-.graph-validation {
-  grid-column: 1 / span 2;
-  text-align: center;
-  font-size: 18px;
-  margin-top: 10px;
-}
-
-.correct-graph {
-  color: green;
-  font-weight: bold;
-}
-
-.incorrect-graph {
-  color: red;
-  font-weight: bold;
+  font-size: 10px; /* Reduced font size */
 }
 
 /* Draggable Component Boxes */
 .component-box {
   position: absolute;
-  width: 100px; /* Slightly larger */
+  width: auto; /* Allow width to adjust */
+  min-width: 120px; /* Ensure a minimum width */
   height: 50px;
   background: white;
   border: 2px solid black;
   text-align: center;
   line-height: 50px;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 10px; /* Reduced font size */
+  padding: 0 5px; /* Padding to fit larger text */
+  box-sizing: border-box; /* Ensure padding doesn't overflow the box */
+}
+
+/* Draggable Component Buttons */
+.component-button {
+  background: #cccccc;
+  padding: 6px; /* Reduced padding */
+  margin: 5px 0;
+  text-align: center;
+  cursor: pointer;
+  font-size: 8px; /* Further reduced font size */
+  border: 1px solid black;
+  border-radius: 4px;
+  font-family: 'Press Start 2P', cursive, sans-serif;
 }
 
 /* Connections Styling */
@@ -116,4 +141,119 @@ html, body {
   width: 100%;
   height: 100%;
   pointer-events: none;
+}
+
+/* SVG Path Styling for Connections */
+path {
+  fill: transparent;
+  stroke: black;
+  stroke-width: 2;
+}
+
+/* Labels for reference graph and playground sections */
+.playground-label, .reference-label {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  background: navy;
+  color: white;
+  padding: 2px 5px;
+  font-weight: bold;
+  font-size: 10px; /* Reduced font size */
+}
+
+/* Custom Windows 95-style Scrollbar */
+body *::-webkit-scrollbar {
+  width: 16px;
+  height: 16px;
+  background: none;
+}
+
+body *::-webkit-scrollbar-thumb, body *::-webkit-scrollbar-button {
+  width: 16px;
+  height: 16px;
+  background: silver;
+  box-shadow: inset 1px 1px #dfdfdf, inset -1px -1px gray;
+  border: 1px solid;
+  border-color: silver #000 #000 silver;
+}
+
+body *::-webkit-scrollbar-track {
+  image-rendering: optimizeSpeed;
+  image-rendering: pixelated;
+  image-rendering: optimize-contrast;
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgLTAuNSAyIDIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyI+CjxtZXRhZGF0YT5NYWRlIHdpdGggUGl4ZWxzIHRvIFN2ZyBodHRwczovL2NvZGVwZW4uaW8vc2hzaGF3L3Blbi9YYnh2Tmo8L21ldGFkYXRhPgo8cGF0aCBzdHJva2U9IiNjMGMwYzAiIGQ9Ik0wIDBoMU0xIDFoMSIgLz4KPC9zdmc+");
+  background-position: 0 0;
+  background-repeat: repeat;
+  background-size: 2px;
+}
+
+body *::-webkit-scrollbar-button {
+  background-repeat: no-repeat;
+  background-size: 16px;
+}
+
+body *::-webkit-scrollbar-button:single-button:vertical:decrement {
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgLTAuNSAxNiAxNiIgc2hhcGUtcmVuZGVyaW5nPSJjcmlzcEVkZ2VzIj4KPG1ldGFkYXRhPk1hZGUgd2l0aCBQaXhlbHMgdG8gU3ZnIGh0dHBzOi8vY29kZXBlbi5pby9zaHNoYXcvcGVuL1hieHZOajwvbWV0YXRhdGE+CjxwYXRoIHN0cm9rZT0iIzAwMDAwMCIgZD0iTTcgNWgxTTYgNmgzTTUgN2g1TTQgOGg3IiAvPgo8L3N2Zz4=");
+}
+
+body *::-webkit-scrollbar-button:single-button:vertical:increment {
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgLTAuNSAxNiAxNiIgc2hhcGUtcmVuZGVyaW5nPSJjcmlzcEVkZ2VzIj4KPG1ldGFkYXRhPk1hZGUgd2l0aCBQaXhlbHMgdG8gU3ZnIGh0dHBzOi8vY29kZXBlbi5pby9zaHNoYXcvcGVuL1hieHZOajwvbWV0YXRhdGE+CjxwYXRoIHN0cm9rZT0iIzAwMDAwMCIgZD0iTTQgNWg3TTUgNmg1TTYgN2gzTTcgOGgxIiAvPgo8L3N2Zz4=");
+}
+
+body *::-webkit-scrollbar-button:single-button:horizontal:decrement {
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgLTAuNSAxNiAxNiIgc2hhcGUtcmVuZGVyaW5nPSJjcmlzcEVkZ2VzIj4KPG1ldGFkYXRhPk1hZGUgd2l0aCBQaXhlbHMgdG8gU3ZnIGh0dHBzOi8vY29kZXBlbi5pby9zaHNoYXcvcGVuL1hieHZOajwvbWV0YXRhdGE+CjxwYXRoIHN0cm9rZT0iIzAwMDAwMCIgZD0iTTggM2gxTTcgNGgyTTYgNWgzTTUgNmg0TTYgN2gzTTcgOGgyTTggOWgxIiAvPgo8L3N2Zz4=");
+}
+
+body *::-webkit-scrollbar-button:single-button:horizontal:increment {
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgLTAuNSAxNiAxNiIgc2hhcGUtcmVuZGVyaW5nPSJjcmlzcEVkZ2VzIj4KPG1ldGFkYXRhPk1hZGUgd2l0aCBQaXhlbHMgdG8gU3ZnIGh0dHBzOi8vY29kZXBlbi5pby9zaHNoYXcvcGVuL1hieHZOajwvbWV0YXRhdGE+CjxwYXRoIHN0cm9rZT0iIzAwMDAwMCIgZD0iTTYgM2gxTTYgNGgyTTYgNWgzTTYgNmg0TTYgN2gzTTYgOGgyTTYgOWgxIiAvPgo8L3N2Zz4=");
+}
+
+body *::-webkit-scrollbar-corner {
+  background: silver;
+}
+
+/* NEW: Hide the original timer-score so we can replace it with a Win95-style taskbar. */
+.timer-score {
+  display: none; /* Keep the code in JSX, but hide it visually. */
+}
+
+/* NEW: Windows 95–style Taskbar at the bottom of the .graph-container */
+.win95-taskbar {
+  /* Occupies row 4 in our updated grid */
+  grid-column: 1 / span 2;
+  grid-row: 4;
+  background: #c0c0c0;
+  /* Classic 3D border: top/left highlight, bottom/right shadow */
+  border-top: 2px solid #ffffff;
+  border-left: 2px solid #ffffff;
+  border-bottom: 2px solid #808080;
+  border-right: 2px solid #808080;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+}
+
+/* Left side of taskbar (for validation messages) */
+.win95-taskbar .taskbar-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Right side of taskbar (for time/score) */
+.win95-taskbar .taskbar-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Slightly smaller text, like the Win95 clock */
+.win95-taskbar .timer,
+.win95-taskbar .score,
+.win95-taskbar .placeholder-text {
+  font-size: 10px;
+  color: black;
+  text-shadow: none;
 }
