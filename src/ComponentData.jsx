@@ -7,13 +7,13 @@ export const componentData = [
     { id: 'buttonsAlt-7007', type: 'button', label: 'LLinear Reset Button', targetSection: 'buttonsAlt', icon: '🔘', variant: 'text', imagePath: '/images/buttons/buttonll' },
     { id: 'content-4004', type: 'content', label: 'Dark Content Section', targetSection: 'content', icon: '📝', variant: 'dark', imagePath: '/images/content/image1' },
     { id: 'navbar-2002', type: 'navbar', label: 'Linear Navbar', targetSection: 'navbar', icon: '📋', variant: 'transparent', imagePath: '/images/navbars/navbarl' },
-    { id: 'imageLeft-5005', type: 'image', label: 'Team Image', targetSection: 'imageLeft', icon: '🖼️', variant: 'team', imagePath: '/images/images/image-team' },
+    { id: 'imageLeft-5005', type: 'image', label: 'Team Image', targetSection: 'imageLeft', icon: '🖼️', variant: 'team', imagePath: '/images/images/imagel1' },
     { id: 'content-4005', type: 'content', label: 'Accent Content Section', targetSection: 'content', icon: '📝', variant: 'accent', imagePath: '/images/content/image2' },
     { id: 'buttons-6507', type: 'button', label: 'Gradient Submit Button', targetSection: 'buttons', icon: '🔘', variant: 'gradient', imagePath: '/images/buttons/buttonsg' },
     { id: 'login-2504', type: 'login', label: 'Gradient Login', targetSection: 'login', icon: '🔐', variant: 'social', imagePath: '/images/login/loging' },
     { id: 'imageTop-4506', type: 'image', label: 'Hero Image', targetSection: 'imageTop', icon: '🖼️', variant: 'hero', imagePath: '/images/image/image-hero' },
     { id: 'navbar-2003', type: 'navbar', label: 'Gradient Navbar', targetSection: 'navbar', icon: '📋', variant: 'green', imagePath: '/images/navbars/navbarg' },
-    { id: 'imageLeft-5006', type: 'image', label: 'Gallery Image', targetSection: 'imageLeft', icon: '🖼️', variant: 'gallery', imagePath: '/images/image/image2' },
+    { id: 'imageLeft-5006', type: 'image', label: 'Gallery Image', targetSection: 'imageLeft', icon: '🖼️', variant: 'gallery', imagePath: '/images/image/imagel2' },
     { id: 'footer-8009', type: 'foote', label: 'Gradient Footer', targetSection: 'footer', icon: '🏷️', variant: 'simple', imagePath: '/images/footer/footerg' },
     { id: 'buttonsAlt-7008', type: 'button', label: 'Gradient Reset Button', targetSection: 'buttonsAlt', icon: '🔘', variant: 'icon', imagePath: '/images/buttons/buttonlg' },
     { id: 'contactForm-6007', type: 'contact', label: 'Gradient Contact Form', targetSection: 'contactForm', icon: '✉️', variant: 'colorful', imagePath: '/images/contact/contactg' },
@@ -25,5 +25,5 @@ export const componentData = [
     { id: 'login-2505', type: 'login', label: 'Linear Login', targetSection: 'login', icon: '🔐', variant: 'simple', imagePath: '/images/login/loginl' },
     { id: 'navbar-2004', type: 'navbar', label: 'Repeating Lines Navbar', targetSection: 'navbar', icon: '📋', variant: 'dark', imagePath: '/images/navbars/navbarrl' },
     { id: 'buttonsAlt-7009', type: 'button', label: 'Repeat Lines Reset Button', targetSection: 'buttonsAlt', icon: '🔘', variant: 'secondary', imagePath: '/images/buttons/buttonlrl' },
-    { id: 'imageLeft-5007', type: 'image', label: 'Feature Image', targetSection: 'imageLeft', icon: '🖼️', variant: 'feature', imagePath: '/images/image/image-feature' }
-];
+    { id: 'imageLeft-5007', type: 'image', label: 'Feature Image', targetSection: 'imageLeft', icon: '🖼️', variant: 'feature', imagePath: '/images/image/imagel3' }
+].sort(() => Math.random() - 0.5);

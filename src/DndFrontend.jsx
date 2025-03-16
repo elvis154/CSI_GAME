@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { GameProvider, GameContext } from './GameContext';
 import DraggableComponent from './DraggableComponent';
-import DropZone from './DropZone';
 import './dnd.css';
 import WebsiteSections from './WebsiteSections';
 
