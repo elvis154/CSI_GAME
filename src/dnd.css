@@ -255,7 +255,7 @@ body {
 .website-layout {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+
   width: 100%;
 }
 
@@ -263,9 +263,9 @@ body {
 /* Top section (Navbar and Login) */
 .website-top {
   display: flex;
-  gap: 8px;
+  
   width: 100%;
-  margin-bottom: 12px; /* Increased spacing */
+  /* Increased spacing */
 }
 
 .navbar-section {
@@ -281,61 +281,63 @@ body {
 /* Middle section (Content, Images, Contact) */
 .website-middle {
   display: flex;
-  gap: 12px; /* Increased spacing */
+   /* Increased spacing */
   width: 100%;
-  margin-bottom: 12px; /* Increased spacing */
+   /* Increased spacing */
 }
 
 .website-middle-left {
   flex: 1.5;
   display: flex;
   flex-direction: column;
-  gap: 12px; /* Increased spacing */
+   /* Increased spacing */
 }
 
 .website-middle-right {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 12px; /* Increased spacing */
+  /* Increased spacing */
 }
 
 /* Content section - further increased height */
 .content-section {
-  min-height: 220px; /* Increased from 180px */
-  margin-bottom: 12px; /* Increased spacing */
+  min-height: 400px; /* Increased from 180px */
+   /* Increased spacing */
 }
 
 /* Left image section - increased height */
 .image-section {
   min-height: 180px; /* Increased from 120px */
-  margin-bottom: 12px; /* Increased spacing */
+   /* Increased spacing */
 }
 
 /* For the top image in the right column */
 #section-imageTop {
-  min-height: 180px; /* Increased from 120px */
+  min-height: 400px; /* Increased from 120px */
   flex: 0.8;
 }
 
 /* For the left image in the left column */
 #section-imageLeft {
-  min-height: 200px; /* Increased from 150px */
+  min-width: 400px;
+  min-height: 400px; /* Increased from 150px */
   flex: 0.8;
 }
 
 /* Contact form - more height */
 .contact-form-section {
+  min-width:300px;
   min-height: 320px; /* Increased from 170px */
-  margin-bottom: 12px; /* Increased spacing */
+  /* Increased spacing */
   flex: 1.2;
 }
 
 /* Buttons container */
 .buttons-container {
   display: flex;
-  gap: 12px; /* Increased spacing */
-  margin-bottom: 12px; /* Increased spacing */
+   /* Increased spacing */
+   /* Increased spacing */
 }
 
 .buttons-section, .buttons-section-placeholder {
@@ -345,7 +347,7 @@ body {
 
 /* Footer section */
 .footer-section {
-  min-height: 100px; /* Increased from 70px */
+  min-height: 150px; /* Increased from 70px */
   width: 100%;
 }
 
