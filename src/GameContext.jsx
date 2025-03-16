@@ -67,7 +67,7 @@ useEffect(() => {
       console.log("Periodic check detected all sections complete! Showing success screen.");
       setShowSuccessScreen(true);
       freezeScreen(true);
-      setScore((prevScore) => prevScore + 100);
+      setScore((prevScore) => prevScore + 0);
     }
   }, 5000);
   
@@ -190,7 +190,7 @@ useEffect(() => {
       console.log("At least 8 sections completed! Showing success screen.");
       setShowSuccessScreen(true);
       freezeScreen(true);
-      setScore((prevScore) => prevScore + 100);
+      setScore((prevScore) => prevScore + 0);
       return;
     }
   
@@ -199,7 +199,7 @@ useEffect(() => {
       console.log("All 9 sections completed! Showing success screen.");
       setShowSuccessScreen(true);
       freezeScreen(true);
-      setScore((prevScore) => prevScore + 100);
+      setScore((prevScore) => prevScore + 0);
     }
   }
 
