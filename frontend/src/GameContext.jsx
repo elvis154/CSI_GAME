@@ -8,9 +8,10 @@ export const GameContext = createContext();
 
 export const GameProvider = ({ children }) => {
   const [score, setScore] = useState(0);
-  const [timer, setTimer] = useState(120); // 4 minutes
+  const [timer, setTimer] = useState(100); // 4 minutes
   const [isCursorSlow, setIsCursorSlow] = useState(false);
   const [isScreenFrozen, setIsScreenFrozen] = useState(false);
+  const [penaltyApplied, setPenaltyApplied] = useState(false); // Track if penalty was already applied
 
   // Use all components from componentData
   const [components, setComponents] = useState(componentData);
@@ -41,6 +42,13 @@ export const GameProvider = ({ children }) => {
       if (!isScreenFrozen) {
         // Only decrease timer when screen is not frozen
         setTimer((prevTimer) => {
+          // Apply score penalty when timer drops below 60 seconds (only once)
+          if (prevTimer === 60 && !penaltyApplied) {
+            setScore((prevScore) => Math.max(0, prevScore - 5));
+            setPenaltyApplied(true);
+            console.log("Time below 60 seconds! Applied -10 score penalty.");
+          }
+          
           if (prevTimer <= 0) {
             clearInterval(timerInterval);
             // Handle game over - show timeout screen
@@ -53,25 +61,25 @@ export const GameProvider = ({ children }) => {
     }, 1000);
 
     return () => clearInterval(timerInterval);
-  }, [isScreenFrozen]);
+  }, [isScreenFrozen, penaltyApplied]);
 
   // Add this useEffect for a periodic completion check
-useEffect(() => {
-  // Check completion every 5 seconds as a safety mechanism
-  const completionInterval = setInterval(() => {
-    // Count correct sections from correctSections state
-    const correctCount = Object.values(correctSections).filter(Boolean).length;
-    console.log(`Periodic check: ${correctCount}/9 sections correct`);
+  useEffect(() => {
+    // Check completion every 5 seconds as a safety mechanism
+    const completionInterval = setInterval(() => {
+      // Count correct sections from correctSections state
+      const correctCount = Object.values(correctSections).filter(Boolean).length;
+      console.log(`Periodic check: ${correctCount}/9 sections correct`);
+      
+      if (correctCount >= 9 && !showSuccessScreen) {
+        console.log("Periodic check detected all sections complete! Showing success screen.");
+        setShowSuccessScreen(true);
+        setScore((prevScore) => prevScore + 0);
+      }
+    }, 5000);
     
-    if (correctCount >= 9 && !showSuccessScreen) {
-      console.log("Periodic check detected all sections complete! Showing success screen.");
-      setShowSuccessScreen(true);
-      setScore((prevScore) => prevScore + 0);
-    }
-  }, 5000);
-  
-  return () => clearInterval(completionInterval);
-}, [correctSections, showSuccessScreen]);
+    return () => clearInterval(completionInterval);
+  }, [correctSections, showSuccessScreen]);
 
   // Handle timeout when timer reaches 0
   const handleTimeout = () => {
@@ -142,15 +150,15 @@ useEffect(() => {
   };
 
   // After handleComponentDrop in your GameContext.jsx
-useEffect(() => {
-  // Special handling for the navbar section
-  if (placedComponents.some(comp => comp.sectionId.startsWith("navbar-"))) {
-    setCorrectSections(prev => ({
-      ...prev,
-      navbar: true
-    }));
-  }
-}, [placedComponents]);
+  useEffect(() => {
+    // Special handling for the navbar section
+    if (placedComponents.some(comp => comp.sectionId.startsWith("navbar-"))) {
+      setCorrectSections(prev => ({
+        ...prev,
+        navbar: true
+      }));
+    }
+  }, [placedComponents]);
 
   // Check if all components are placed correctly
   // Update your checkCompletion function
