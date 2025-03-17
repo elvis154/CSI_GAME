@@ -1,4 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
+import { signOut } from "firebase/auth";
+import { auth } from "./firebase";
 import { GameContext } from "./GameContext";
 
 const TimeoutScreen = () => {
@@ -102,12 +104,24 @@ const TimeoutScreen = () => {
         <p>Your time has run out.</p>
         <p className="win95-score-display">Final Score: {score}</p>
         <div className="win95-button-group">
-          <button className="win95-button" onClick={handleTimeoutOk}>
+          {/* <button className="win95-button" onClick={handleTimeoutOk}>
             Try Again
-          </button>
+          </button> */}
           <button
             className="win95-button"
-            onClick={() => (window.location.href = "/")}
+            onClick={() => {
+              // Sign out the user first
+              signOut(auth)
+                .then(() => {
+                  // Then redirect to login page
+                  window.location.href = "/";
+                })
+                .catch((error) => {
+                  console.error("Sign out error:", error);
+                  // Still redirect even if there's an error
+                  window.location.href = "/";
+                });
+            }}
           >
             Return to Login
           </button>

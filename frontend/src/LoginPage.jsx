@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { auth } from "./firebase";
-import { useNavigate } from "react-router-dom"; // Import the useNavigate hook
+import { useNavigate } from "react-router-dom";
 import "./login.css";
 
 const LoginPage = () => {
@@ -9,19 +9,24 @@ const LoginPage = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const navigate = useNavigate(); // Hook for navigation
+  const navigate = useNavigate();
 
-  // Check if the user is already logged in when the component mounts
+  // Sign out any existing user when the login page loads
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(user => {
-      setIsAuthenticated(!!user);
-      if (user) {
-        navigate("/logout"); // If logged in, redirect to the logout page
-      }
+    // First sign out any existing user
+    signOut(auth).then(() => {
+      console.log("User signed out on login page load");
+    }).catch(error => {
+      console.error("Error signing out:", error);
     });
+    
+    // Then set up the auth state listener
+    const unsubscribe = auth.onAuthStateChanged(user => {
+      // We don't need to do anything here now - we've already signed out
+    });
+    
     return unsubscribe;
-  }, [navigate]);
+  }, []);
 
   const handleLoginClick = async (e) => {
     e.preventDefault();
@@ -55,41 +60,37 @@ const LoginPage = () => {
           <span>Login - Windows 95</span>
         </div>
         <div className="win95-content">
-          {!isAuthenticated ? (
-            <>
-              <p className="win95-text">Enter your username and password</p>
-              {error && <div className="win95-error">{error}</div>}
-              <form onSubmit={handleLoginClick}>
-                <div className="win95-input-group">
-                  <label htmlFor="email">Username:</label>
-                  <input
-                    id="email"
-                    type="email"
-                    placeholder="Enter your email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                  />
-                </div>
-                <div className="win95-input-group">
-                  <label htmlFor="password">Password:</label>
-                  <input
-                    id="password"
-                    type="password"
-                    placeholder="Enter your password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                  />
-                </div>
-                <div className="win95-buttons">
-                  <button type="submit" disabled={loading}>Login</button>
-                  <button type="button" className="cancel" onClick={() => { setEmail(""); setPassword(""); setError(""); }}>Cancel</button>
-                </div>
-              </form>
-              {loading && <div className="win95-loading">Logging in...</div>}
-            </>
-          ) : null}
+          <p className="win95-text">Enter your username and password</p>
+          {error && <div className="win95-error">{error}</div>}
+          <form onSubmit={handleLoginClick}>
+            <div className="win95-input-group">
+              <label htmlFor="email">Username:</label>
+              <input
+                id="email"
+                type="email"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
+            <div className="win95-input-group">
+              <label htmlFor="password">Password:</label>
+              <input
+                id="password"
+                type="password"
+                placeholder="Enter your password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+            <div className="win95-buttons">
+              <button type="submit" disabled={loading}>Login</button>
+              <button type="button" className="cancel" onClick={() => { setEmail(""); setPassword(""); setError(""); }}>Cancel</button>
+            </div>
+          </form>
+          {loading && <div className="win95-loading">Logging in...</div>}
         </div>
       </div>
     </div>

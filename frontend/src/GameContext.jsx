@@ -8,7 +8,7 @@ export const GameContext = createContext();
 
 export const GameProvider = ({ children }) => {
   const [score, setScore] = useState(0);
-  const [timer, setTimer] = useState(10); // 4 minutes
+  const [timer, setTimer] = useState(1); // 4 minutes
   const [isCursorSlow, setIsCursorSlow] = useState(false);
   const [isScreenFrozen, setIsScreenFrozen] = useState(false);
 

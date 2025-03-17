@@ -1,5 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { GameContext } from "./GameContext";
+import { signOut } from "firebase/auth";
+import { auth } from "./firebase";
 
 const SuccessScreen = () => {
   const { score, handleSuccessOk } = useContext(GameContext);
@@ -127,12 +129,24 @@ const SuccessScreen = () => {
           <p>You have successfully completed the website layout!</p>
           <p className="win95-score-display">Final Score: {score}</p>
           <div className="win95-button-group">
-            <button className="win95-button" onClick={handleSuccessOk}>
+            {/* <button className="win95-button" onClick={handleSuccessOk}>
               Play Again
-            </button>
+            </button> */}
             <button
               className="win95-button"
-              onClick={() => (window.location.href = "/")}
+              onClick={() => {
+                // Sign out the user first
+                signOut(auth)
+                  .then(() => {
+                    // Then redirect to login page
+                    window.location.href = "/";
+                  })
+                  .catch((error) => {
+                    console.error("Sign out error:", error);
+                    // Still redirect even if there's an error
+                    window.location.href = "/";
+                  });
+              }}
             >
               Return to Login
             </button>
