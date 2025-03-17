@@ -1,92 +1,125 @@
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html, body {
+body {
+  background-color: #008080; /* Classic Windows 95 teal background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 100vh;
-  width: 100vw;
-  background: url("./bg_image.webp") no-repeat center center fixed;
-  background-size: cover;
-  font-family: 'Press Start 2P', cursive;
-  color: black;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  margin: 0;
+  font-family: "VT323", monospace;
+  color: #fff;
 }
 
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
+.win95-container {
+  width: 600px; /* Appropriate width for the container */
+  background: #c0c0c0;
+  border: 2px solid #808080; /* Classic border color */
+  box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.25); /* Subtle shadow for depth */
+  padding: 24px;
+  border-radius: 5px; /* Slightly rounded corners */
 }
 
-.login-box {
-  border: 4px solid black;
-  padding: 30px; /* Increased padding for a bigger box */
-  background-color: #e0e0e0;
-  box-shadow: 6px 6px 0px black;
-  width: 400px; /* Made it wider */
+.win95-titlebar {
+  background: #000080;
+  color: white;
+  padding: 8px 12px; /* Compact padding */
+  font-size: 20px;
   text-align: center;
+  font-weight: bold;
+  border: 2px solid #808080; /* Light gray border */
+  border-radius: 5px; /* Rounded corners */
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25); /* Subtle shadow for depth */
 }
 
-.title {
-  font-size: 22px; /* Slightly larger title */
-  margin-bottom: 25px;
+.win95-content {
+  padding: 16px; /* More compact padding inside the content area */
 }
 
-.input-group {
-  margin-bottom: 20px;
-  text-align: left;
+.win95-content p {
+  font-size: 18px; /* Slightly smaller text */
+  margin-bottom: 14px; /* Reduced margin for text spacing */
 }
 
-label {
+.win95-content label {
   display: block;
-  font-size: 14px;
+  margin-top: 12px;
+  font-size: 16px;
+  font-weight: bold;
 }
 
-.input {
+input {
   width: 100%;
-  padding: 10px;
-  border: 3px solid black;
-  background-color: white;
-  font-family: inherit;
+  padding: 14px 20px; /* Increased padding for "chunkier" look */
+  margin-bottom: 14px;
+  border: 2px solid #808080; /* Soft border for inputs */
+  background: #fff;
+  color: #000;
+  font-family: "VT323", monospace;
+  font-size: 20px; /* Chunkier, larger text */
+  font-weight: bold; /* Make the text stand out */
+  border-radius: 5px; /* Rounded corners for input fields */
+  box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.2); /* Inner shadow for input focus */
+  text-align: center; /* Center align the text inside the input */
+}
+
+input:focus {
   outline: none;
-  box-shadow: inset 3px 3px 0px black;
-  font-size: 14px;
+  border-color: #000080; /* Change border color on focus */
+  box-shadow: 0 0 5px rgba(0, 0, 255, 0.5); /* Focus effect */
 }
 
-.login-button {
-  width: 100%;
-  padding: 14px;
-  border: 3px solid black;
-  background-color: #dcdcdc;
-  cursor: pointer;
-  box-shadow: 3px 3px 0px black;
-  font-family: inherit;
-  font-size: 14px;
-  transition: all 0.1s ease-in-out;
-}
-
-.login-button:hover {
-  background-color: #b0b0b0;
-  transform: translateY(-2px);
-  box-shadow: 5px 5px 0px black;
-}
-
-.footer {
+.win95-buttons {
+  display: flex;
+  justify-content: space-between;
   margin-top: 20px;
-  font-size: 12px;
-  background: #dcdcdc;
-  padding: 8px;
-  border: 3px solid black;
-  box-shadow: 3px 3px 0px black;
-  text-align: center;
-  width: 280px;
 }
+
+button {
+  font-family: "VT323", monospace;
+  font-size: 16px;
+  padding: 12px 20px; /* Increased button padding for chunkier feel */
+  background: #c0c0c0;
+  border: 2px solid #808080;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+button:hover {
+  background: #808080;
+  transform: scale(1.05); /* Hover effect with slight scale */
+}
+
+button:active {
+  box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.3); /* Inset shadow on click */
+}
+
+.cancel {
+  background: #b0b0b0; /* Classic Windows 95 gray cancel button */
+}
+
+.win95-error {
+  background: #ff0000; /* Bright red background for error */
+  color: #fff;
+  padding: 10px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 18px;
+  border-radius: 3px;
+  border: 2px solid #800000; /* Dark red border for error */
+}
+
+.win95-loading {
+  font-size: 18px;
+  color: #000080;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.win95-text {
+  color: #000080;
+}
+

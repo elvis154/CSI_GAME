@@ -1,0 +1,168 @@
+/* Importing the font */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100vh;
+  width: 100vw;
+  background: url("./bg_image.webp") no-repeat center center fixed;
+  background-size: cover;
+  font-family: 'Press Start 2P', cursive;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* General container for alignment */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+/* Main Graph Comparison Box */
+.graph-comparison-box {
+  border: 4px solid black;
+  padding: 30px;
+  background-color: #e0e0e0;
+  box-shadow: 6px 6px 0px black;
+  width: 500px; /* Adjusted size for graph comparison */
+  text-align: center;
+}
+
+.title {
+  font-size: 22px; /* Slightly larger title */
+  margin-bottom: 25px;
+  font-weight: bold;
+}
+
+.input-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+label {
+  display: block;
+  font-size: 14px;
+}
+
+.input {
+  width: 100%;
+  padding: 10px;
+  border: 3px solid black;
+  background-color: white;
+  font-family: inherit;
+  outline: none;
+  box-shadow: inset 3px 3px 0px black;
+  font-size: 14px;
+}
+
+.graph-comparison-button {
+  width: 100%;
+  padding: 14px;
+  border: 3px solid black;
+  background-color: #dcdcdc;
+  cursor: pointer;
+  box-shadow: 3px 3px 0px black;
+  font-family: inherit;
+  font-size: 14px;
+  transition: all 0.1s ease-in-out;
+}
+
+.graph-comparison-button:hover {
+  background-color: #b0b0b0;
+  transform: translateY(-2px);
+  box-shadow: 5px 5px 0px black;
+}
+
+.graph-result {
+  margin-top: 20px;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px;
+  border: 3px solid black;
+  background-color: #dcdcdc;
+  box-shadow: 3px 3px 0px black;
+  text-align: center;
+}
+
+.footer {
+  margin-top: 20px;
+  font-size: 12px;
+  background: #dcdcdc;
+  padding: 8px;
+  border: 3px solid black;
+  box-shadow: 3px 3px 0px black;
+  text-align: center;
+  width: 280px;
+}
+
+/* Drag-and-Drop Graph Area */
+.graph-area {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  background-color: #000;
+  border: 2px solid lime;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Graph nodes style (Draggable nodes) */
+.draggable-node {
+  position: absolute;
+  padding: 8px 12px;
+  background-color: #0078d4;
+  color: white;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: move;
+  user-select: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.draggable-node:hover {
+  background-color: #005a8c;
+  transform: translateY(-2px);
+}
+
+/* Button and Interactive Elements */
+button {
+  padding: 10px 20px;
+  background-color: #0078d4;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 14px;
+}
+
+button:hover {
+  background-color: #005a8c;
+}
+
+.chart-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.status-bar {
+  text-align: center;
+  color: lime;
+  font-size: 14px;
+  padding: 5px;
+  border-top: 2px solid lime;
+  margin-top: 10px;
+}
