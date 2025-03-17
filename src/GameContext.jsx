@@ -8,7 +8,7 @@ export const GameContext = createContext();
 
 export const GameProvider = ({ children }) => {
   const [score, setScore] = useState(0);
-  const [timer, setTimer] = useState(240); // 4 minutes
+  const [timer, setTimer] = useState(4); // 4 minutes
   const [isCursorSlow, setIsCursorSlow] = useState(false);
   const [isScreenFrozen, setIsScreenFrozen] = useState(false);
 
@@ -189,7 +189,6 @@ useEffect(() => {
     if (totalCorrectPlacements >= 8) {
       console.log("At least 8 sections completed! Showing success screen.");
       setShowSuccessScreen(true);
-      freezeScreen(true);
       setScore((prevScore) => prevScore + 0);
       return;
     }
@@ -198,7 +197,6 @@ useEffect(() => {
     if (correctSectionsCount >= 8 || uniqueCorrectPlacements.size >= 8) {
       console.log("All 9 sections completed! Showing success screen.");
       setShowSuccessScreen(true);
-      freezeScreen(true);
       setScore((prevScore) => prevScore + 0);
     }
   }
