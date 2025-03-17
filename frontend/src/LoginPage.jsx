@@ -24,7 +24,7 @@ const LoginPage = () => {
         const storedPassword = docSnap.data().password; // Retrieve the password field
 
         if (password === storedPassword) {
-          alert("Login successful! 🎉");
+          // alert("Login successful! 🎉");
           setPassword(""); // Clear password field after successful login
           navigate("/Win1");
         } else {
