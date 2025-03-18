@@ -11,7 +11,7 @@ export const componentData = [
     { id: 'content-4005', type: 'content', label: 'Accent Content Section', targetSection: 'content', icon: '📝', variant: 'accent', imagePath: '/images/content/image2' },
     { id: 'buttons-6507', type: 'button', label: 'Gradient Submit Button', targetSection: 'buttons', icon: '🔘', variant: 'gradient', imagePath: '/images/buttons/buttonsg' },
     { id: 'login-2504', type: 'login', label: 'Gradient Login', targetSection: 'login', icon: '🔐', variant: 'social', imagePath: '/images/login/loging' },
-    { id: 'imageTop-4506', type: 'image', label: 'Hero Image', targetSection: 'imageTop', icon: '🖼️', variant: 'hero', imagePath: '/images/image/image-hero' },
+    { id: 'imageTop-4506', type: 'image', label: 'Hero Image', targetSection: 'imageTop', icon: '🖼️', variant: 'hero', imagePath: '/images/image/image2' },
     { id: 'navbar-2003', type: 'navbar', label: 'Gradient Navbar', targetSection: 'navbar', icon: '📋', variant: 'green', imagePath: '/images/navbars/navbarg' },
     { id: 'imageLeft-5006', type: 'image', label: 'Left Image 2', targetSection: 'imageLeft', icon: '🖼️', variant: 'gallery', imagePath: '/images/image/imagel2' },
     { id: 'footer-8009', type: 'foote', label: 'Gradient Footer', targetSection: 'footer', icon: '🏷️', variant: 'simple', imagePath: '/images/footer/footerg' },

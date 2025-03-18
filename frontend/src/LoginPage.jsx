@@ -36,7 +36,7 @@ const LoginPage = () => {
         if (password === storedPassword) {
           // alert("Login successful! 🎉");
           setPassword(""); // Clear password field after successful login
-          navigate("/deployment");
+          navigate("/Win1");
         } else {
           setError("Incorrect password. Please try again.");
         }

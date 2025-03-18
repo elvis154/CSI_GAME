@@ -11,15 +11,15 @@ const WebsiteSections = ({ onComponentDrop }) => {
 
   // Fixed section IDs - these will be shown on hover
   const sectionIds = {
-    navbar: 20021, //[2002, 2003, 2004],
-    login: 25042, //[2503, 2504, 2505],
-    content: 40060, //[4004, 4005, 4006],
-    imageTop: 45050, //[4505, 4506, 4507],
-    imageLeft: 50061, // [5004, 5005, 5006],
-    contactForm: 60072, //[6006, 6007, 6008],
-    buttons: 65081, //[6508, 6507, 6506],
-    buttonsAlt: 70072, // [7007, 7008, 7009],
-    footer: 80082, // [8008, 8009, 8010],
+    navbar: 20040, //[2002, 2003, 2004],
+    login: 25031, //[2503, 2504, 2505],
+    content: 40040, //[4004, 4005, 4006],
+    imageTop: 45061, //[4505, 4506, 4507],
+    imageLeft: 50072, // [5007, 5005, 5006],
+    contactForm: 60080, //[6006, 6007, 6008],
+    buttons: 65071, //[6508, 6507, 6506],
+    buttonsAlt: 70092, // [7007, 7008, 7009],
+    footer: 80090, // [8008, 8009, 8010],
   };
 
   // Website sections
