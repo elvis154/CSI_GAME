@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
 /* Windows 95 Theme Base Styles */
 :root {
   --win95-gray: #c0c0c0;
@@ -106,7 +108,7 @@ body {
 
 /* Component Sidebar */
 .components-sidebar {
-  width: 220px;
+  width: 230px;
   min-width: 220px;
   background-color: var(--win95-gray);
   box-shadow: var(--win95-shadow-outer);
@@ -118,7 +120,7 @@ body {
 
 .sidebar-title {
   background-color: var(--win95-blue);
-  color: var(--win95-white);
+  color: yellowgreen;
   padding: 4px 8px;
   font-weight: bold;
 }
@@ -135,6 +137,7 @@ body {
   border-top: 1px solid var(--win95-gray-dark);
   padding: 8px;
   margin-top: 8px;
+  font-size: 10px;
 }
 
 .property-group {
@@ -596,7 +599,7 @@ body {
   cursor: grab;
   user-select: none;
   font-family: 'MS Sans Serif', sans-serif;
-  font-size: 12px;
+  font-size: 14px;
   position: relative;
   transition: transform 0.05s ease-out;
 }
