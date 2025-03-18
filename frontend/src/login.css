@@ -39,7 +39,8 @@
 .win-flag {
   width: 80px;
   height: 80px;
-  background: linear-gradient(135deg, #ff0000 0%, #ff0000 25%, #00ff00 25%, #00ff00 50%, #0000ff 50%, #0000ff 75%, #ffff00 75%, #ffff00 100%);
+  background-image: url('./windows.png');
+  background-size: cover;
   margin-right: 20px;
   box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
 }
@@ -362,5 +363,5 @@
 }
 
 .status-time{
-  margin-left: 390px;
+  margin-left: 380px;
 }
