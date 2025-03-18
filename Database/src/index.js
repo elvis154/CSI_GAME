@@ -1,22 +1,18 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter, Routes, Route } from "react-router-dom"; // Import BrowserRouter and Routes
-
-import LoginPage from "./LoginPage"; // Import LoginPage
-import ErrorPage from "./ErrorPage"; // Import ErrorPage (this is for the error page)
-import Win95Terminal from "./Win95Terminal";
-import Windows95Matrix from "./Windows95Matrix";
+import App from "./App";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import LoginPage from "./LoginPage"; 
+import "./index.css";  // Updated styles for Windows 95 theme
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(
-  <React.StrictMode>
+root.render(<React.StrictMode>
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<LoginPage />} /> 
-        <Route path="/error" element={<ErrorPage />} /> 
-        <Route path="/Win" element={<Win95Terminal/>} />
-        <Route path="/matrix" element={<Windows95Matrix/>} />
-      </Routes>
+        <Routes>
+            <Route path="/" element={<LoginPage />} />
+            <Route path="/App" element={<App />} />
+            {/* <Route path="/logout" element={<LogoutPage/>} /> */}
+            {/* <Route path="/leaderboard" element={}></> */}
+        </Routes>
     </BrowserRouter>
-  </React.StrictMode>
-);
+</React.StrictMode>);

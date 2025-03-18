@@ -1,0 +1,13 @@
+.glitch {
+    font-size: 48px;
+    font-weight: bold;
+    color: #00ff00;
+    position: relative;
+    animation: glitch 1s infinite;
+}
+
+@keyframes glitch {
+    0% { text-shadow: 2px 2px 5px #00ff00; }
+    50% { text-shadow: -2px -2px 5px #ff00ff; }
+    100% { text-shadow: 2px 2px 5px #00ff00; }
+}

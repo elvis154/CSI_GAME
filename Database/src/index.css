@@ -1,0 +1,119 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+body {
+  margin: 0;
+  font-family: 'MS Sans Serif', Arial, sans-serif;
+  background-color: #C0C0C0; /* Windows 95 grey */
+  padding: 0;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.window {
+  width: 90%;
+  max-width: 800px;
+  background-color: #C0C0C0;
+  border: 2px solid black;
+  padding: 10px;
+}
+
+.header {
+  background-color: #0000A0;
+  color: white;
+  padding: 5px;
+  text-align: left;
+  font-weight: bold;
+}
+
+.timer-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: black;
+  color: #00FF00;
+  padding: 10px;
+  font-size: 20px;
+  font-weight: bold;
+  border: 2px inset grey;
+  width: 300px;
+
+}
+
+.main-container {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.sql-section {
+  width: 60%;
+  background-color: #E0E0E0;
+  padding: 10px;
+  border: 2px inset black;
+}
+
+.mcq-section {
+  width: 410px;
+  background-color: #D0D0D0;
+  padding: 10px;
+  border: 2px inset black;
+  padding-left: 25x;
+  margin-left: 18px;
+  margin-top: 35px;
+}
+
+.mcq-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  
+}
+
+.mcq-words{
+  padding-top: 13px;
+}
+
+.draggable-item {
+  padding: 5px;
+  background-color: #A0A0A0;
+  border: 2px outset black;
+  cursor: pointer;
+  text-align: center;
+}
+
+button {
+  font-family: 'Press Start 2P', 'MS Sans Serif', Tahoma, sans-serif;
+  font-size: 10px;
+  color: black;
+  background-color: #c0c0c0;
+  border: 2px solid #808080;
+  border-top-color: #ffffff;
+  border-left-color: #ffffff;
+  padding: 8px 16px;
+  cursor: pointer;
+  outline: none;
+  box-shadow: none;
+  margin-top: 15px;
+  
+  /* Pixelation effect */
+  image-rendering: pixelated;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  
+}
+
+button:active {
+  border: 2px solid #808080;
+  border-top-color: #404040;
+  border-left-color: #404040;
+  border-bottom-color: #ffffff;
+  border-right-color: #ffffff;
+  background-color: #a0a0a0;
+  color: black;
+}

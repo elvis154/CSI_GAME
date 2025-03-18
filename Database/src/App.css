@@ -1,38 +1,121 @@
-.App {
+/* Main Container */
+.container {
+  display: flex;
+  height: 100vh;
+  background: #c3c3c3;
+}
+
+/* Left Panel - SQL Queries */
+.left-panel {
+  flex: 2;
+  font-size: 14px;
+  padding: 15px;
+  border-right: 4px solid black;
+  background: #dcdcdc;
+}
+
+/* Right Panel - MCQ and Timer */
+.right-panel {
+  flex: 1;
+  padding: 15px;
+  background: #dcdcdc;
+}
+
+/* Timer Box (Top-Right) */
+.timer-section {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background: black;
+  padding: 8px;
+  border: 2px solid red;
+  width: 200px;
+  margin-bottom: 10px;
+}
+
+.clock-icon {
+  width: 24px;
+  margin-right: 8px;
+}
+
+.timer-text {
+  color: green;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.timer-time {
+  color: lime;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+/* Windows 95-style Buttons */
+button {
+  .button-95 {
+    font-family: 'MS Sans Serif', Tahoma, sans-serif;
+    font-size: 14px;
+    color: black;
+    background-color: #c0c0c0;
+    border: 2px solid #808080;
+    border-top-color: #ffffff;
+    border-left-color: #ffffff;
+    padding: 4px 12px;
+    cursor: pointer;
+    outline: none;
+    box-shadow: none;
+  }
+  
+  .button-95:active {
+    border: 2px solid #808080;
+  border-top-color: #404040;
+  border-left-color: #404040;
+  border-bottom-color: #ffffff;
+  border-right-color: #ffffff;
+  background-color: #a0a0a0;
+  color: black;
+
+  }
+  
+}
+
+button:hover {
+  background: #a9a9a9;
+}
+
+/* Popup Window */
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px;
+  border: 3px solid black;
+  box-shadow: 4px 4px black;
+}
+
+.popup-content {
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.popup-content h2 {
+  margin-bottom: 10px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.popup-content button {
+  display: block;
+  margin: auto;
+  padding: 5px 10px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+#mcq-h2{
+  text-align: center;
+  font-family: 'Press Start 2P', 'MS Sans Serif', Tahoma, sans-serif;
+  font-size: 18px;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+#left-h2{
+  font-family: 'Press Start 2P', 'MS Sans Serif', Tahoma, sans-serif;
+  font: 10px;
 }

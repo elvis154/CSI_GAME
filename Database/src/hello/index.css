@@ -1,0 +1,135 @@
+/* App container */
+.app-container {
+  width: 100vw;
+  height: 100vh;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Matrix effect sits in the background */
+.matrix-effect {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0; /* Lower layer */
+}
+
+/* Content should sit above the matrix effect */
+.content {
+  z-index: 10; /* Higher than matrix effect */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Terminal styling */
+.terminal {
+  background-color: rgba(0, 0, 0, 0.9);
+  color: #00ff00;
+  font-family: 'Courier New', Courier, monospace;
+  padding: 20px;
+  height: 250px;
+  width: 80%; /* Center terminal */
+  overflow-y: auto;
+  border: 2px solid #00ff00;
+  box-shadow: 0 0 15px #00ff00;
+  border-radius: 5px;
+}
+
+/* IP Scanner styling */
+.ip-scanner {
+  color: #00ff00;
+  font-size: 24px;
+  background-color: rgba(0, 0, 0, 0.8);
+  box-shadow: 0 0 10px #00ff00;
+  border: 2px solid #00ff00;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+/* Progress bar styling */
+.progress-bar {
+  width: 80%; 
+  height: 20px;
+  background-color: #000;
+  border: 2px solid #00ff00;
+  box-shadow: 0 0 10px #00ff00;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.progress {
+  height: 100%;
+  background-color: #00ff00;
+  width: 0;
+  transition: width 0.3s ease;
+}
+
+/* CPU Usage styling */
+.cpu-usage {
+  color: #00ff00;
+  font-size: 24px;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.8);
+  box-shadow: 0 0 10px #00ff00;
+  border: 2px solid #00ff00;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+/* Access Status styling */
+.glitch {
+  font-size: 36px;
+  color: #00ff00;
+  text-align: center;
+  margin-top: 10px;
+  animation: glitch 1s infinite;
+}
+
+/* Glitch animation */
+@keyframes glitch {
+  0% { text-shadow: 2px 2px 5px #00ff00; color: #00ff00; }
+  20% { text-shadow: -2px -2px 5px #ff00ff; color: #ff00ff; }
+  40% { text-shadow: 2px -2px 5px #00ffff; color: #00ffff; }
+  60% { text-shadow: -2px 2px 5px #ff0000; color: #ff0000; }
+  80% { text-shadow: 2px 2px 5px #00ff00; color: #00ff00; }
+  100% { text-shadow: -2px -2px 5px #00ff00; color: #00ff00; }
+}
+
+/* Button styling */
+.button {
+  padding: 12px 24px;
+  background-color: black;
+  color: #00ff00;
+  font-size: 16px;
+  border: 2px solid #00ff00;
+  box-shadow: 0 0 10px #00ff00;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #00ff00;
+  color: black;
+}
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px; /* Width of the scrollbar */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #00ff00; /* Bright green thumb */
+  border-radius: 10px;
+  box-shadow: 0 0 10px #00ff00;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #000; /* Black background */
+  border-radius: 10px;
+}
+
