@@ -55,9 +55,9 @@ const LoginPage = () => {
     <div className="desktop-background">
       {!startupComplete ? (
         <div className="startup-screen">
-          <div className="win95-logo">
-            <div className="win-flag"></div>
-            <span className="win-text">Windows 95</span>
+          <div className="win95-logos">
+            <div className="win-flags"></div>
+            <span className="win-texts">Windows 95</span>
           </div>
           <div className="startup-progress">
             <div className="progress-bar"></div>

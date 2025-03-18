@@ -29,23 +29,23 @@
   animation: fadeIn 4s ease-in;
 }
 
-.win95-logo {
+.win95-logos {
   display: flex;
   align-items: center;
   margin-bottom: 40px;
   animation: scaleIn 4s ease-out;
 }
 
-.win-flag {
+.win-flags {
   width: 80px;
   height: 80px;
   background-image: url('./win95.png');
   background-size: cover;
-  margin-right: 20px;
+  margin-right: 10px;
   box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
 }
 
-.win-text {
+.win-texts {
   font-size: 64px;
   font-weight: bold;
   font-family: "VT323", monospace;
