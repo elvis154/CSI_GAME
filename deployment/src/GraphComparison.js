@@ -31,10 +31,10 @@ const GraphComparison = () => {
 
   const referenceComponents = [
     { type: "Frontend", x: 50, y: 50 },
-    { type: "Backend", x: 200, y: 50 },
+    { type: "Backend", x: 200, y: 80 },
     { type: "Database", x: 350, y: 50 },
     { type: "API Gateway", x: 200, y: 175 },
-    { type: "Storage", x: 350, y: 150 },
+    { type: "Storage", x: 365, y: 160 },
     { type: "Network", x: 500, y: 100 },
     { type: "Cache", x: 50, y: 200 },
     { type: "Load Balancer", x: 350, y: 225 },
@@ -60,8 +60,6 @@ const GraphComparison = () => {
   }
 }, [timeLeft, isCorrectGraph, score]);
 
-
-
   useEffect(() => {
     checkGraph();
   }, [connections, components]);
@@ -70,16 +68,50 @@ const GraphComparison = () => {
     event.preventDefault();
     const type = event.dataTransfer.getData("text/plain");
     const rect = event.target.getBoundingClientRect();
-
+  
+    // Assuming components are 100px by 50px for simplicity
+    const componentWidth = 100;
+    const componentHeight = 50;
+  
+    // Calculate x and y so that the cursor is the center of the component
     const newComponent = {
-      id: uuidv4(), // Use UUID for unique component ID
+      id: uuidv4(),
       type,
-      x: event.clientX - rect.left,
-      y: event.clientY - rect.top,
+      x: event.clientX - rect.left - componentWidth / 2, // Cursor is center of component
+      y: event.clientY - rect.top - componentHeight / 2, // Cursor is center of component
     };
-
+  
     setComponents([...components, newComponent]);
   };
+  
+  const handleMouseDown = (event, id) => {
+    // Start tracking mouse movement for dragging
+    const mouseMoveHandler = (moveEvent) => {
+      const newComponents = components.map((comp) => {
+        if (comp.id === id) {
+          // Update the component's position based on the cursor
+          return {
+            ...comp,
+            x: moveEvent.clientX - 50, // Offset to center the component
+            y: moveEvent.clientY - 25, // Offset to center the component
+          };
+        }
+        return comp;
+      });
+      setComponents(newComponents);
+    };
+  
+    const mouseUpHandler = () => {
+      // Remove the event listeners when mouse is released
+      document.removeEventListener("mousemove", mouseMoveHandler);
+      document.removeEventListener("mouseup", mouseUpHandler);
+    };
+  
+    // Add event listeners for mouse move and mouse up
+    document.addEventListener("mousemove", mouseMoveHandler);
+    document.addEventListener("mouseup", mouseUpHandler);
+  };
+  
 
   const handleDragOver = (event) => event.preventDefault();
 
