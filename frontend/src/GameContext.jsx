@@ -39,7 +39,7 @@ export const GameProvider = ({ children }) => {
   // Timer effect
   useEffect(() => {
     const timerInterval = setInterval(() => {
-      if (!isScreenFrozen) {
+      if (!isScreenFrozen && !showSuccessScreen ) {
         // Only decrease timer when screen is not frozen
         setTimer((prevTimer) => {
           // Apply score penalty when timer drops below 60 seconds (only once)
@@ -61,7 +61,7 @@ export const GameProvider = ({ children }) => {
     }, 1000);
 
     return () => clearInterval(timerInterval);
-  }, [isScreenFrozen, penaltyApplied]);
+  }, [isScreenFrozen, penaltyApplied, showSuccessScreen]);
 
   // Add this useEffect for a periodic completion check
   useEffect(() => {
