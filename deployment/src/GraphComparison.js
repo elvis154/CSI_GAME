@@ -13,8 +13,8 @@ const GraphComparison = () => {
   const [showPopup, setShowPopup] = useState(false); // <-- NEW: Controls pop-up visibility
   const [showFailPopup, setShowFailPopup] = useState(false); // Fail popup
   // New states for timer and score
-  const [timeLeft, setTimeLeft] = useState(90);
-  const [score, setScore] = useState(200);
+  const [timeLeft, setTimeLeft] = useState(200);
+  const [score, setScore] = useState(400);
 
   const referenceGraph = [
     { from: "Frontend", to: "Backend" },
