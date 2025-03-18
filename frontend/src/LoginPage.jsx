@@ -16,7 +16,7 @@ const LoginPage = () => {
     // Simulate Windows 95 startup sequence
     setTimeout(() => {
       setStartupComplete(true);
-    }, 1500);
+    }, 4000);
   }, []);
 
 
@@ -36,7 +36,7 @@ const LoginPage = () => {
         if (password === storedPassword) {
           // alert("Login successful! 🎉");
           setPassword(""); // Clear password field after successful login
-          navigate("/Win1");
+          navigate("/deployment");
         } else {
           setError("Incorrect password. Please try again.");
         }

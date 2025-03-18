@@ -26,20 +26,20 @@
   width: 100vw;
   background-color: #000;
   color: #fff;
-  animation: fadeIn 1s ease-in;
+  animation: fadeIn 4s ease-in;
 }
 
 .win95-logo {
   display: flex;
   align-items: center;
   margin-bottom: 40px;
-  animation: scaleIn 1s ease-out;
+  animation: scaleIn 4s ease-out;
 }
 
 .win-flag {
   width: 80px;
   height: 80px;
-  background-image: url('./windows.png');
+  background-image: url('./win95.png');
   background-size: cover;
   margin-right: 20px;
   box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
@@ -65,7 +65,7 @@
   height: 100%;
   background-color: #fff;
   width: 0;
-  animation: progressBar 1.5s linear forwards;
+  animation: progressBar 4s linear forwards;
 }
 
 @keyframes progressBar {
