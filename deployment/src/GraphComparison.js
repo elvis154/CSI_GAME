@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid"; // Import UUID library for unique ids
 import "./GraphComparison.css";
+import { useNavigate } from "react-router-dom";
 
 const GraphComparison = () => {
   // Existing states
@@ -9,7 +10,8 @@ const GraphComparison = () => {
   const [connections, setConnections] = useState([]);
   const [selectedComponent, setSelectedComponent] = useState(null);
   const [isCorrectGraph, setIsCorrectGraph] = useState(null);
-
+  const [showPopup, setShowPopup] = useState(false); // <-- NEW: Controls pop-up visibility
+  const [showFailPopup, setShowFailPopup] = useState(false); // Fail popup
   // New states for timer and score
   const [timeLeft, setTimeLeft] = useState(90);
   const [score, setScore] = useState(200);
@@ -25,6 +27,8 @@ const GraphComparison = () => {
     { from: "API Gateway", to: "Monitoring" },
   ];
 
+  const navigate = useNavigate();
+
   const referenceComponents = [
     { type: "Frontend", x: 50, y: 50 },
     { type: "Backend", x: 200, y: 50 },
@@ -38,15 +42,18 @@ const GraphComparison = () => {
   ];
 
  // Timer: Decrease timeLeft and score every second
-useEffect(() => {
+ useEffect(() => {
   if (timeLeft > 0 && isCorrectGraph !== true) {
     const timerId = setInterval(() => {
       setTimeLeft((prev) => prev - 1);
       setScore((prev) => (prev > 0 ? prev - 2 : 0));
     }, 1000);
     return () => clearInterval(timerId);
+  } else if (timeLeft === 0) {
+    setShowFailPopup(true); // ⏳ Timer ran out → Show fail screen
   }
 }, [timeLeft, isCorrectGraph]);
+
 
 
   useEffect(() => {
@@ -107,21 +114,25 @@ useEffect(() => {
           to: conn.from < conn.to ? conn.to : conn.from,
         }))
         .sort((a, b) => a.from.localeCompare(b.from) || a.to.localeCompare(b.to));
-
+  
       const sortedReference = referenceGraph
         .map((conn) => ({
           from: conn.from < conn.to ? conn.from : conn.to,
           to: conn.from < conn.to ? conn.to : conn.from,
         }))
         .sort((a, b) => a.from.localeCompare(b.from) || a.to.localeCompare(b.to));
-
+  
       const isCorrect = JSON.stringify(sortedConnections) === JSON.stringify(sortedReference);
       setIsCorrectGraph(isCorrect);
+  
+      if (isCorrect) {
+        setShowPopup(true); // ✅ Show success popup when graph is correct
+      }
     } else {
       setIsCorrectGraph(false);
     }
   };
-
+  
   return (
     <div className="graph-container">
       {/* 
@@ -266,6 +277,36 @@ useEffect(() => {
           <span className="score">Score: {score}</span>
         </div>
       </div>
+
+       {/* Windows 95-style Pop-up Window */}
+       {showPopup && (
+        <div className="win95-popup">
+          <div className="win95-popup-header">
+            <span>Task Completed</span>
+            <button className="close-button" onClick={() => setShowPopup(false)}>X</button>
+          </div>
+          <div className="win95-popup-body">
+            <p>✅ You have completed the graph correctly!</p>
+            <p>Final Score: <strong>{score}</strong></p>
+            <button className="win95-ok-button" onClick={() => navigate("/")}>Return to Login</button>
+          </div>
+        </div>
+      )}
+        {/* Fail Popup (Timer Ran Out) */}
+        {showFailPopup && (
+        <div className="win95-popup">
+          <div className="win95-popup-header">
+            <span>⏳ Time’s Up!</span>
+            <button className="close-button" onClick={() => setShowFailPopup(false)}>X</button>
+          </div>
+          <div className="win95-popup-body">
+            <p>❌ Time ran out! You did not complete the graph in time.</p>
+            <button className="win95-ok-button" onClick={() => navigate("/")}>
+              Return to Login
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
