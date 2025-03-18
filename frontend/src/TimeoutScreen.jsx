@@ -98,33 +98,35 @@ const TimeoutScreen = () => {
       ))}
 
       {/* Timeout Dialog */}
-      <div className="win95-timeout-content">
-        <div className="win95-hourglass-icon">⌛</div>
-        <h2>Time's Up!</h2>
-        <p>Your time has run out.</p>
-        <p className="win95-score-display">Final Score: {score}</p>
-        <div className="win95-button-group">
-          {/* <button className="win95-button" onClick={handleTimeoutOk}>
-            Try Again
-          </button> */}
-          <button
-            className="win95-button"
-            onClick={() => {
-              // Sign out the user first
-              signOut(auth)
-                .then(() => {
-                  // Then redirect to login page
-                  window.location.href = "/";
-                })
-                .catch((error) => {
-                  console.error("Sign out error:", error);
-                  // Still redirect even if there's an error
-                  window.location.href = "/";
-                });
-            }}
-          >
-            Return to Login
-          </button>
+      <div className="win95-timeout-dialog">
+        <div className="win95-title-bar">
+          <span>Time's Up!</span>
+          <span>✕</span>
+        </div>
+        <div className="win95-timeout-content">
+          <div className="win95-hourglass-icon">⌛</div>
+          <p>Your time has run out.</p>
+          <p className="win95-score-display">Final Score: {score}</p>
+          <div className="win95-button-group">
+            <button
+              className="win95-button"
+              onClick={() => {
+                // Sign out the user first
+                signOut(auth)
+                  .then(() => {
+                    // Then redirect to login page
+                    window.location.href = "/";
+                  })
+                  .catch((error) => {
+                    console.error("Sign out error:", error);
+                    // Still redirect even if there's an error
+                    window.location.href = "/";
+                  });
+              }}
+            >
+              Return to Login
+            </button>
+          </div>
         </div>
       </div>
     </div>
