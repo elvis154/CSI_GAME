@@ -24,23 +24,29 @@ const GraphComparison = () => {
   // Create a ref for the playground area
   const playgroundRef = useRef(null);
 
-  // Updated reference graph with fewer components
   const referenceGraph = [
     { from: "Frontend", to: "Backend" },
     { from: "Backend", to: "Database" },
     { from: "Backend", to: "API Gateway" },
+    { from: "Database", to: "Storage" },
     { from: "API Gateway", to: "Network" },
+    { from: "Frontend", to: "Cache" },
+    { from: "Backend", to: "Load Balancer" },
+    { from: "API Gateway", to: "Monitoring" },
   ];
 
   const navigate = useNavigate();
 
-  // Updated reference components with fewer components
   const referenceComponents = [
     { type: "Frontend", x: 50, y: 50 },
     { type: "Backend", x: 200, y: 80 },
     { type: "Database", x: 350, y: 50 },
     { type: "API Gateway", x: 200, y: 175 },
+    { type: "Storage", x: 420, y: 140 },
     { type: "Network", x: 500, y: 60 },
+    { type: "Cache", x: 50, y: 200 },
+    { type: "Load Balancer", x: 350, y: 225 },
+    { type: "Monitoring", x: 650, y: 185 },
   ];
 
   // Timer: Decrease timeLeft and score every second
@@ -540,7 +546,11 @@ const GraphComparison = () => {
           "Backend",
           "Database",
           "API Gateway",
+          "Storage",
           "Network",
+          "Cache",
+          "Load Balancer",
+          "Monitoring",
         ].map((component, index) => (
           <div
             key={index}
