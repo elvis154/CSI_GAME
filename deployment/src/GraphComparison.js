@@ -13,8 +13,8 @@ const GraphComparison = () => {
   const [showPopup, setShowPopup] = useState(false); // <-- NEW: Controls pop-up visibility
   const [showFailPopup, setShowFailPopup] = useState(false); // Fail popup
   // New states for timer and score
-  const [timeLeft, setTimeLeft] = useState(200);
-  const [score, setScore] = useState(400);
+  const [timeLeft, setTimeLeft] = useState(180);
+  const [score, setScore] = useState(100);
 
   const referenceGraph = [
     { from: "Frontend", to: "Backend" },
@@ -46,13 +46,19 @@ const GraphComparison = () => {
   if (timeLeft > 0 && isCorrectGraph !== true) {
     const timerId = setInterval(() => {
       setTimeLeft((prev) => prev - 1);
-      setScore((prev) => (prev > 0 ? prev - 2 : 0));
+
+      // Decrease score by 1 point every 3 seconds if timer is at 180 seconds and score is 100
+      if (timeLeft % 3 === 0 && score > 0) {
+        setScore((prev) => (prev > 0 ? prev - 1 : 0)); // Decrease by 1 point every 3 seconds
+      }
+
     }, 1000);
+
     return () => clearInterval(timerId);
   } else if (timeLeft === 0) {
     setShowFailPopup(true); // ⏳ Timer ran out → Show fail screen
   }
-}, [timeLeft, isCorrectGraph]);
+}, [timeLeft, isCorrectGraph, score]);
 
 
 
